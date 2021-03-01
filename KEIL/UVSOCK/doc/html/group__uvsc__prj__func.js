@@ -1,0 +1,26 @@
+var group__uvsc__prj__func =
+[
+    [ "UVSC_PRJ_ACTIVE_FILES", "group__uvsc__prj__func.html#ga9e20c6a2f503ea3ee8a035e943ab69cb", null ],
+    [ "UVSC_PRJ_ADD_FILE", "group__uvsc__prj__func.html#gacb4a2e8a3c62e7b5a1829e554704df87", null ],
+    [ "UVSC_PRJ_ADD_GROUP", "group__uvsc__prj__func.html#ga057a7194bd57d5cdeba11092bd81f70b", null ],
+    [ "UVSC_PRJ_BUILD", "group__uvsc__prj__func.html#ga1fd09aa5a87cd3803cb441508a2d2206", null ],
+    [ "UVSC_PRJ_BUILD_CANCEL", "group__uvsc__prj__func.html#gad233f6bfcfad881c3ac74eccafc53671", null ],
+    [ "UVSC_PRJ_CLEAN", "group__uvsc__prj__func.html#gad68cba6d238c40b605addb12375a314a", null ],
+    [ "UVSC_PRJ_CLOSE", "group__uvsc__prj__func.html#ga8ca2fb34aa682a685873dfad1ec22fdc", null ],
+    [ "UVSC_PRJ_CMD_PROGRESS", "group__uvsc__prj__func.html#gacce4bbb07773b47abfd45e09460f7d7b", null ],
+    [ "UVSC_PRJ_DEL_FILE", "group__uvsc__prj__func.html#ga3e19fe2be2ea25d550c9fab53df97608", null ],
+    [ "UVSC_PRJ_DEL_GROUP", "group__uvsc__prj__func.html#ga7b9d9fb3ac0507b704628df140a6f51f", null ],
+    [ "UVSC_PRJ_ENUM_FILES", "group__uvsc__prj__func.html#ga97df95ef4d3646d27352371f0e228c65", null ],
+    [ "UVSC_PRJ_ENUM_GROUPS", "group__uvsc__prj__func.html#ga08ef1bc42687a1c0aa466bcb1890a2d7", null ],
+    [ "UVSC_PRJ_ENUM_TARGETS", "group__uvsc__prj__func.html#ga8fbfb8b7c3bc3beaca6f768029b1496b", null ],
+    [ "UVSC_PRJ_FLASH_DOWNLOAD", "group__uvsc__prj__func.html#ga99181695edea4a8586df6a7ccfab2a85", null ],
+    [ "UVSC_PRJ_GET_CUR_TARGET", "group__uvsc__prj__func.html#ga59f74f4277afd3eea036e5faccc99dfa", null ],
+    [ "UVSC_PRJ_GET_DEBUG_TARGET", "group__uvsc__prj__func.html#ga5b168c8f2b516000fb1253454d910c34", null ],
+    [ "UVSC_PRJ_GET_OPTITEM", "group__uvsc__prj__func.html#ga28e3ce2c12f2637ff7b2f33a16e45f20", null ],
+    [ "UVSC_PRJ_GET_OUTPUTNAME", "group__uvsc__prj__func.html#ga51590cf49265a2bc8840825ee3d3c67b", null ],
+    [ "UVSC_PRJ_LOAD", "group__uvsc__prj__func.html#gadda814b9bc459bb8cb3dc2d866e1308d", null ],
+    [ "UVSC_PRJ_SET_DEBUG_TARGET", "group__uvsc__prj__func.html#ga8ef15064200b783d453bcaa6ba63c5a5", null ],
+    [ "UVSC_PRJ_SET_OPTITEM", "group__uvsc__prj__func.html#ga8177976bd191df27262a6bce2e262e37", null ],
+    [ "UVSC_PRJ_SET_OUTPUTNAME", "group__uvsc__prj__func.html#ga73b4242053bb4598c577f50c5b7050dd", null ],
+    [ "UVSC_PRJ_SET_TARGET", "group__uvsc__prj__func.html#ga13237479dd2ec1137ab4bad483654e28", null ]
+];

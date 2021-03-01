@@ -1,0 +1,8 @@
+#pragma once
+
+typedef enum {
+	NEWCLIENT,
+	ACK_NEWCLIENT,
+	NEWDATA,
+	DELCLIENT
+} ETHNOTIFY;

@@ -1,0 +1,17 @@
+﻿  pch.cpp
+  EthernetClient.cpp
+C:\Users\gabri\OneDrive\Desktop\ARM\KEIL\Applications DLL\VISUAL STUDIO Projects\MFCLibrary1\MFCLibrary1\EthernetClient.cpp(150,12): warning C4101: 'data': unreferenced local variable
+  EthernetHub.cpp
+C:\Users\gabri\OneDrive\Desktop\ARM\KEIL\Applications DLL\VISUAL STUDIO Projects\MFCLibrary1\MFCLibrary1\EthernetHub.cpp(36,21): warning C4101: 'poolThread': unreferenced local variable
+C:\Users\gabri\OneDrive\Desktop\ARM\KEIL\Applications DLL\VISUAL STUDIO Projects\MFCLibrary1\MFCLibrary1\EthernetHub.cpp(37,22): warning C4101: 'poolThreadId': unreferenced local variable
+  MFCLibrary1.cpp
+  Generating Code...
+     Creating library C:\Users\gabri\OneDrive\Desktop\ARM\KEIL\Applications DLL\VISUAL STUDIO Projects\MFCLibrary1\Debug\MFCLibrary1.lib and object C:\Users\gabri\OneDrive\Desktop\ARM\KEIL\Applications DLL\VISUAL STUDIO Projects\MFCLibrary1\Debug\MFCLibrary1.exp
+  MFCLibrary1.vcxproj -> C:\Users\gabri\OneDrive\Desktop\ARM\KEIL\Applications DLL\VISUAL STUDIO Projects\MFCLibrary1\Debug\MFCLibrary1.dll
+  Performing Custom Build Step
+  Could Not Find D:\Softwares_OS\Keil_v5\ARM\BIN\MFCLibrary1.dll
+  Does D:\Softwares_OS\Keil_v5\ARM\BIN\MFCLibrary1.dll specify a file name
+  or directory name on the target
+  (F = file, D = directory)? F
+  C:\Users\gabri\OneDrive\Desktop\ARM\KEIL\Applications DLL\VISUAL STUDIO Projects\MFCLibrary1\Debug\MFCLibrary1.dll
+  1 File(s) copied

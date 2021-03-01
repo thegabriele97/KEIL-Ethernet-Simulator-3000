@@ -1,0 +1,748 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// German (Germany) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)
+#ifdef _WIN32
+LANGUAGE LANG_GERMAN, SUBLANG_GERMAN
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_IDENTIFY DIALOGEX 0, 0, 211, 148
+STYLE DS_SETFONT | WS_CHILD
+EXSTYLE WS_EX_CLIENTEDGE
+FONT 8, "Microsoft Sans Serif", 0, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Send 'WhoIs' Event",IDC_SENDWHOIS,267,193,94,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Which Project",IDC_WHICHDOC,267,210,94,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Use Sim",IDC_BUTTON_USIM,7,62,50,14
+    PUSHBUTTON      "Use Target",IDC_BUTTON_UTRG,59,62,50,14
+    PUSHBUTTON      "Close current Project",IDC_CLOSEPRJ,7,6,90,14
+    PUSHBUTTON      "Load Project...",IDC_PRJREAD,7,23,90,14
+END
+
+IDD_MAKE DIALOGEX 0, 0, 269, 239
+STYLE DS_SETFONT | WS_CHILD
+EXSTYLE WS_EX_CLIENTEDGE
+FONT 8, "Microsoft Sans Serif", 0, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Send Build",IDC_SENDBUILD,5,3,59,14
+    PUSHBUTTON      "Send Rebuild",IDC_SENDREBUILD,66,3,59,14
+    PUSHBUTTON      "Stop Build",IDC_SENDSTOPBUILD,5,18,59,14
+    EDITTEXT        IDC_ITEXT,0,140,262,92,ES_MULTILINE | ES_AUTOHSCROLL | WS_VSCROLL
+    PUSHBUTTON      "Send SetFileGroup",IDC_SETFILEGROUP,0,126,24,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Send SetOptions",IDC_SETOPTIONS,59,125,38,14,NOT WS_VISIBLE
+    PUSHBUTTON      "GetProjectFile(nfo)",IDC_GETPRJFILE,99,125,29,14,NOT WS_VISIBLE
+    EDITTEXT        IDC_FILESEQ,20,127,17,14,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    LTEXT           "File Name / Sequ.:",IDC_STATIC,38,130,33,8,NOT WS_VISIBLE
+    PUSHBUTTON      "Clean",IDC_CLEANPRJ,66,18,59,14
+    EDITTEXT        IDC_EDGROUP,10,48,134,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Add",IDC_ADDGRP,9,63,37,14
+    PUSHBUTTON      "Delete",IDC_DELGROUP,48,63,37,14
+    EDITTEXT        IDC_EDFILENAME,9,92,161,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Add",IDC_ADDFILE,10,107,37,14
+    PUSHBUTTON      "Delete",IDC_DELFILE,48,107,37,14
+    LTEXT           "Add/Remove File from above specified group:",IDC_STATIC,10,82,161,8
+    LTEXT           "Add/Delete/Enumerate Group:",IDC_STATIC,9,37,127,8
+    PUSHBUTTON      "Download",IDC_FLASHDOWNLOAD,126,3,59,14
+    PUSHBUTTON      "Enum Files",IDC_ENUMFILES,86,63,59,14
+    PUSHBUTTON      "Enum Groups",IDC_ENUMGROUPS,149,63,59,14
+    PUSHBUTTON      "Prj-Options...",IDC_PRJOPTIONS2,126,18,59,14
+    PUSHBUTTON      "Test Progress",IDC_PROGRESS,192,18,59,14
+    PUSHBUTTON      "Active Files",IDC_ACTFILES,192,3,59,14
+    PUSHBUTTON      "GetExtVersion",IDC_GETEXTVERSION,192,33,59,14
+END
+
+IDD_ENUMVTR DIALOGEX 0, 0, 269, 238
+STYLE DS_SETFONT | WS_CHILD | WS_BORDER
+EXSTYLE WS_EX_CLIENTEDGE
+FONT 8, "Microsoft Sans Serif", 0, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Start Debugger",IDC_STARTDEBUG,4,4,64,14
+    PUSHBUTTON      "Stop Debugger",IDC_STOPTDEBUG,4,19,64,14
+    PUSHBUTTON      "Start Execution",IDC_STARTEXEC,4,41,64,14
+    PUSHBUTTON      "Stop Execution",IDC_STOPEXEC,4,56,64,14
+    PUSHBUTTON      "Step Over",IDC_STEPOVER,4,71,64,14
+    PUSHBUTTON      "Step Into",IDC_STEPINTO,4,86,64,14
+    PUSHBUTTON      "Step Out",IDC_STEPOUT,4,101,64,14
+    PUSHBUTTON      "Step Instruction",IDC_STEPINSTR,4,116,64,14
+    PUSHBUTTON      "ExecUntil",IDC_EXECUNTIL,181,220,64,14,NOT WS_VISIBLE | WS_DISABLED
+    EDITTEXT        IDC_EDUNTIL,79,4,112,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "CalcExpr.",IDC_GETMEMADR,192,4,64,14
+    PUSHBUTTON      "SetBreakpoint",IDC_SETBP,51,223,64,14,NOT WS_VISIBLE | WS_DISABLED
+    PUSHBUTTON      "ClearBreakpoint",IDC_CLRBP,6,237,37,14,NOT WS_VISIBLE | WS_DISABLED
+    PUSHBUTTON      "SetBpExpr",IDC_SETBPEXP,247,237,19,14,NOT WS_VISIBLE
+    PUSHBUTTON      "ClearBpExpr",IDC_CLRBPEXP,247,206,22,14,NOT WS_VISIBLE
+    PUSHBUTTON      "ReadRegister",IDC_READREG,185,188,64,14,NOT WS_VISIBLE | WS_DISABLED
+    EDITTEXT        IDC_REGNAME,141,193,31,14,ES_AUTOHSCROLL | NOT WS_VISIBLE | WS_DISABLED
+    EDITTEXT        IDC_REGVAL,174,193,31,14,ES_AUTOHSCROLL | NOT WS_VISIBLE | WS_DISABLED
+    LTEXT           "Register:",IDC_STATIC,146,183,33,8,NOT WS_VISIBLE
+    LTEXT           "Value:",IDC_STATIC,179,183,26,8,NOT WS_VISIBLE
+    PUSHBUTTON      "WriteRegister",IDC_WRITEREG,174,203,64,14,NOT WS_VISIBLE | WS_DISABLED
+    PUSHBUTTON      "ReadMemory",IDC_READMEM,79,41,64,14
+    PUSHBUTTON      "WriteMemory",IDC_WRITEMEM,79,56,64,14
+    PUSHBUTTON      "Decode Addr",IDC_DECMEMA,118,219,64,14,NOT WS_VISIBLE | WS_DISABLED
+    PUSHBUTTON      "Clear Al lBrkpt",IDC_CLRBPALL,155,207,64,14,NOT WS_VISIBLE | WS_DISABLED
+    PUSHBUTTON      "Is Running",IDC_ISRUNNING,4,131,64,14
+    PUSHBUTTON      "Cycles && Time",IDC_CYC_TSTAMP,4,146,64,14
+    PUSHBUTTON      "Interval 1sec",IDC_SETINTERVAL,4,160,64,14
+    PUSHBUTTON      "Reset",IDC_RESET,69,131,64,14
+    EDITTEXT        IDC_VTRNAME,69,146,64,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Read VTR",IDC_GETVTR,69,160,64,14
+    EDITTEXT        IDC_VTRVAL,134,146,64,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Write VTR",IDC_SETVTR,134,160,64,14
+    CTEXT           "MemAddr := <invalid>",IDC_SHOWMA,79,19,177,11,SS_SUNKEN
+    PUSHBUTTON      "Get VersionNr.",IDC_GETVERS,134,131,64,14
+    PUSHBUTTON      "Send 'd',CR",IDC_SERSEND_D,4,195,64,14
+    LTEXT           "Send Serial:",IDC_STATIC,4,185,54,8
+    PUSHBUTTON      "Get SerOut",IDC_GETSERO,69,195,64,14
+    PUSHBUTTON      "Breakpoints...",IDC_BREAKPOINTS,79,71,64,14
+    EDITTEXT        IDC_EDENID,79,87,112,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "EnumMemb",IDC_IDENUM,191,87,64,14
+    PUSHBUTTON      "Map File/Line",IDC_MAPTOFL,144,41,64,14
+    PUSHBUTTON      "Enum Stack",IDC_ENUMSTACK,69,116,64,14
+    PUSHBUTTON      "Enum VTR",IDC_ENUMVTR,134,116,64,14
+    PUSHBUTTON      "Enum VTR(v)",IDC_ENUMVTRV,198,116,64,14
+    PUSHBUTTON      "Asm/Hll Code",IDC_SHOWCODE,144,56,64,14
+END
+
+IDD_TARGMESS DIALOGEX 0, 0, 319, 230
+STYLE DS_SETFONT | WS_CHILD
+EXSTYLE WS_EX_CLIENTEDGE
+FONT 8, "Microsoft Sans Serif", 0, 0, 0x1
+BEGIN
+    PUSHBUTTON      "MsgToTarget",IDC_MSGTOTARG,196,190,70,14,NOT WS_VISIBLE
+    COMBOBOX        IDC_TMCHA,270,191,33,147,CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Channel:",IDC_STATIC,269,182,33,8,NOT WS_VISIBLE
+    PUSHBUTTON      "Hide",IDC_BUTTON_HIDE,7,7,50,14
+    PUSHBUTTON      "Show",IDC_BUTTON_SHOW,59,7,50,14
+    PUSHBUTTON      "Minimize",IDC_BUTTON_MINIMIZE,7,26,50,14
+    PUSHBUTTON      "Maximize",IDC_BUTTON_MAXIMIZE,59,26,50,14
+    PUSHBUTTON      "UI Lock",IDC_BUTTON_UILOCK,7,45,50,14
+    PUSHBUTTON      "UI Unlock",IDC_BUTTON_UIUNLOCK,59,45,50,14
+    PUSHBUTTON      "Exit uVision",IDC_BUTTON_EXIT_UVISION,7,64,102,13
+    PUSHBUTTON      "Restore",IDC_BUTTON_RESTORE,111,26,50,14
+END
+
+IDD_TARGINFO DIALOGEX 0, 0, 357, 239
+STYLE DS_SETFONT | WS_CHILD
+EXSTYLE WS_EX_CLIENTEDGE
+FONT 8, "Microsoft Sans Serif", 0, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Get Target Info",IDC_GETTARGINFO,17,19,80,14
+    PUSHBUTTON      "Test 1",IDC_BUTTON_TEST1,317,4,32,14
+    PUSHBUTTON      "Test 2",IDC_BUTTON_TEST2,317,19,32,14
+    PUSHBUTTON      "Test 3",IDC_BUTTON_TEST3,317,33,32,14
+    PUSHBUTTON      "Test 4",IDC_BUTTON_TEST4,317,48,32,14
+    PUSHBUTTON      "Test 5",IDC_BUTTON_TEST5,317,63,32,14
+    PUSHBUTTON      "Test 6",IDC_BUTTON_TEST6,317,77,32,14
+    PUSHBUTTON      "Test 7",IDC_BUTTON_TEST7,317,91,32,14
+    PUSHBUTTON      "Test 8",IDC_BUTTON_TEST8,317,105,32,14
+    PUSHBUTTON      "Test 9",IDC_BUTTON_TEST9,317,120,32,14
+    PUSHBUTTON      "Test 10",IDC_BUTTON_TEST10,317,135,32,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_TARGMESS DLGINIT
+BEGIN
+    IDC_TMCHA, 0x403, 2, 0
+0x0030, 
+    IDC_TMCHA, 0x403, 2, 0
+0x0031, 
+    IDC_TMCHA, 0x403, 2, 0
+0x0032, 
+    IDC_TMCHA, 0x403, 2, 0
+0x0033, 
+    IDC_TMCHA, 0x403, 2, 0
+0x0034, 
+    IDC_TMCHA, 0x403, 2, 0
+0x0035, 
+    IDC_TMCHA, 0x403, 2, 0
+0x0036, 
+    IDC_TMCHA, 0x403, 2, 0
+0x0037, 
+    IDC_TMCHA, 0x403, 2, 0
+0x0038, 
+    IDC_TMCHA, 0x403, 2, 0
+0x0039, 
+    IDC_TMCHA, 0x403, 3, 0
+0x3031, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3131, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3231, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3331, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3431, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3531, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3631, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3731, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3831, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3931, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3032, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3132, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3232, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3332, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3432, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3532, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3632, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3732, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3832, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3932, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3033, "\000" 
+    IDC_TMCHA, 0x403, 3, 0
+0x3133, "\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_MAKE, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 238
+    END
+
+    IDD_ENUMVTR, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 237
+    END
+
+    IDD_TARGINFO, DIALOG
+    BEGIN
+        RIGHTMARGIN, 356
+        BOTTOMMARGIN, 238
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // German (Germany) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG  0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About PwOptions"
+FONT 8, "Microsoft Sans Serif"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "PwOptions Version 1.0",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2002",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "OK",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_PWOPTIONS_DIALOG DIALOGEX 0, 0, 484, 369
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "UV Socket Tester V3.6 (15/1/2008)"
+FONT 8, "Microsoft Sans Serif", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,91,306,50,14,NOT WS_VISIBLE | WS_DISABLED | NOT WS_TABSTOP
+    PUSHBUTTON      "Cancel",IDCANCEL,157,306,50,14,NOT WS_VISIBLE | NOT WS_TABSTOP
+    CONTROL         "Tree1",IDC_TREE1,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | WS_BORDER | WS_TABSTOP,2,2,103,196
+    LTEXT           "This window is used (actually only the upper left coordinates) to position the child windows instead.\nTherefore this window is not visible.\nNOTE: all child windows will be resized to the size of this dummy control!",IDC_S_COORDINATES,112,2,372,241,NOT WS_VISIBLE
+    EDITTEXT        IDC_RECEIVED,5,249,479,117,ES_MULTILINE | ES_AUTOHSCROLL | NOT WS_VISIBLE | WS_VSCROLL
+    LTEXT           "Received Events:",IDC_STATIC,4,229,83,8
+    PUSHBUTTON      "Real-Time Agent Trace",IDC_BUTTONRTA,2,207,103,14
+    LISTBOX         IDC_LISTOUT,0,244,484,125,LBS_OWNERDRAWVARIABLE | LBS_NOINTEGRALHEIGHT | LBS_DISABLENOSCROLL | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Clear Log",IDC_CLEARLOG,67,228,36,11
+    PUSHBUTTON      "Refresh",IDC_REFRESH,232,330,100,14,NOT WS_VISIBLE | WS_DISABLED
+    LTEXT           "Clients:",IDC_STATIC,3,2,23,8,NOT WS_VISIBLE | WS_DISABLED
+    CONTROL         "Tree1",IDC_TREE2,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | NOT WS_VISIBLE | WS_DISABLED | WS_BORDER | WS_TABSTOP,232,133,100,196
+END
+
+IDD_BRKDLG DIALOGEX 0, 0, 320, 268
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Breakpoints"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Close",IDOK,134,251,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,56,251,50,14,NOT WS_VISIBLE
+    EDITTEXT        IDC_BRKEXPR,74,29,215,14,ES_AUTOHSCROLL
+    COMBOBOX        IDC_BRKTYPE,74,44,66,57,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Addr. Expr.:",IDC_STATIC,15,32,55,8,0,WS_EX_RIGHT
+    LTEXT           "Type:",IDC_STATIC,15,46,55,8,0,WS_EX_RIGHT
+    LTEXT           "Count:",IDC_STATIC,186,77,34,8,0,WS_EX_RIGHT
+    EDITTEXT        IDC_BRKCOUNT,224,74,65,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Command:",IDC_STATIC,14,91,55,8,0,WS_EX_RIGHT
+    EDITTEXT        IDC_BRKCMD,74,89,215,14,ES_AUTOHSCROLL
+    GROUPBOX        "Create Breakpoint",IDC_STATIC,5,5,309,118
+    PUSHBUTTON      "Create...",IDC_BRKCREATE,124,105,72,14
+    LTEXT           "Optional: Extended Breakpoint Parameters:",IDC_STATIC,15,62,206,8
+    LTEXT           "Required: Breakpoint-Address and Breakpoint-Type:",IDC_STATIC,15,16,206,8
+    EDITTEXT        IDC_ACCSIZE,74,74,65,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Access Size:",IDC_STATIC,14,77,55,8,0,WS_EX_RIGHT
+    PUSHBUTTON      "Disable",IDC_BPDISABLE,197,229,72,14
+    PUSHBUTTON      "Delete",IDC_BPKILL,50,229,72,14
+    PUSHBUTTON      "Enable",IDC_BPENABLE,124,229,72,14
+    LISTBOX         IDC_BPLIST,10,142,300,84,LBS_HASSTRINGS | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    GROUPBOX        "Delete/Enable/Disable existing Breakpoint:",IDC_STATIC,5,129,309,118
+END
+
+IDD_PRJOPT DIALOGEX 0, 0, 320, 266
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Project Options"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,135,249,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,61,250,50,14,NOT WS_VISIBLE
+    EDITTEXT        IDC_TNAME,78,29,215,14,ES_AUTOHSCROLL
+    LTEXT           "Target:",IDC_STATIC,14,32,60,8,0,WS_EX_RIGHT
+    EDITTEXT        IDC_GNAME,78,45,215,14,ES_AUTOHSCROLL
+    LTEXT           "Group:",IDC_STATIC,14,48,60,8,0,WS_EX_RIGHT
+    EDITTEXT        IDC_FNAME,78,61,215,14,ES_AUTOHSCROLL
+    LTEXT           "Filename:",IDC_STATIC,14,64,60,8,0,WS_EX_RIGHT
+    GROUPBOX        "Project-Component:",IDC_STATIC,5,15,308,159
+    COMBOBOX        IDC_JOBTYPE,78,106,129,143,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Option Type:",IDC_STATIC,15,108,59,8,0,WS_EX_RIGHT
+    EDITTEXT        IDC_OPTSTR,78,120,215,14,ES_AUTOHSCROLL
+    LTEXT           "Option String:",IDC_STATIC,14,123,60,8,0,WS_EX_RIGHT
+    PUSHBUTTON      "Write",IDC_OPTWRITE,160,140,72,14
+    PUSHBUTTON      "Read",IDC_OPTREAD,87,140,72,14
+    GROUPBOX        "Option-Type to Read/Write:",IDC_STATIC,11,89,293,72
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_BRKDLG DLGINIT
+BEGIN
+    IDC_BRKTYPE, 0x403, 10, 0
+0x7845, 0x6365, 0x7475, 0x6f69, 0x006e, 
+    IDC_BRKTYPE, 0x403, 5, 0
+0x6552, 0x6461, "\000" 
+    IDC_BRKTYPE, 0x403, 6, 0
+0x7257, 0x7469, 0x0065, 
+    IDC_BRKTYPE, 0x403, 10, 0
+0x6552, 0x6461, 0x7257, 0x7469, 0x0065, 
+    0
+END
+
+IDD_PRJOPT DLGINIT
+BEGIN
+    IDC_JOBTYPE, 0x403, 7, 0
+0x2d4c, 0x694d, 0x6373, "\000" 
+    IDC_JOBTYPE, 0x403, 7, 0
+0x2d43, 0x694d, 0x6373, "\000" 
+    IDC_JOBTYPE, 0x403, 7, 0
+0x2d41, 0x694d, 0x6373, "\000" 
+    IDC_JOBTYPE, 0x403, 10, 0
+0x2d43, 0x6e49, 0x6c63, 0x6475, 0x0065, 
+    IDC_JOBTYPE, 0x403, 10, 0
+0x2d41, 0x6e49, 0x6c63, 0x6475, 0x0065, 
+    IDC_JOBTYPE, 0x403, 9, 0
+0x2d43, 0x6544, 0x6966, 0x656e, "\000" 
+    IDC_JOBTYPE, 0x403, 11, 0
+0x2d43, 0x6e55, 0x6564, 0x6966, 0x656e, "\000" 
+    IDC_JOBTYPE, 0x403, 11, 0
+0x2d43, 0x704f, 0x6974, 0x696d, 0x657a, "\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\UV3Socket_Test.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\UV3Socket_Test.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "FileDescription", "PwOptions MFC Application"
+            VALUE "FileVersion", "1, 1, 0, 1"
+            VALUE "InternalName", "PwOptions"
+            VALUE "LegalCopyright", "Copyright (C) 2002-2005"
+            VALUE "OriginalFilename", "PwOptions.EXE"
+            VALUE "ProductName", "PwOptions Application"
+            VALUE "ProductVersion", "1, 1, 0, 1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_ABOUTBOX            "&About PwOptions..."
+    IDS_PROPSHT_CAPTION     "Property Sheet"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.K.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_RTA DIALOGEX 0, 0, 604, 285
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_CAPTION | WS_SYSMENU
+CAPTION "Real-Time Agent Message Trace"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Exit",IDOK,303,249,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Cancel",IDCANCEL,232,121,50,14,NOT WS_VISIBLE
+    CONTROL         "Raw Data",IDC_SHOWRAW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,416,184,50,9
+    CONTROL         "Custom 0 - Trace",IDC_CHECKCUST1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,416,85,71,10
+    CONTROL         "Custom 1 - State",IDC_CHECKCUST2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,416,95,70,10
+    CONTROL         "Custom 2",IDC_CHECKCUST3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,416,105,46,10
+    CONTROL         "Custom 3",IDC_CHECKCUST4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,416,115,46,10
+    CONTROL         "Custom 4",IDC_CHECKCUST5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,416,125,46,10
+    CONTROL         "Custom 5",IDC_CHECKCUST6,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,416,135,46,10
+    CONTROL         "Custom 6",IDC_CHECKCUST7,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,416,145,46,10
+    CONTROL         "Custom 7",IDC_CHECKCUST8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,416,155,46,10
+    CONTROL         "Custom 8",IDC_CHECKCUST9,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,503,85,46,10
+    CONTROL         "Custom 9",IDC_CHECKCUST10,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,503,95,46,10
+    CONTROL         "Custom 10",IDC_CHECKCUST11,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,503,105,50,10
+    CONTROL         "Custom 11",IDC_CHECKCUST12,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,503,115,50,10
+    CONTROL         "Custom 12",IDC_CHECKCUST13,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,503,125,50,10
+    CONTROL         "Custom 13",IDC_CHECKCUST14,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,503,135,50,10
+    CONTROL         "Custom 14",IDC_CHECKCUST15,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,503,145,50,10
+    CONTROL         "Custom 15",IDC_CHECKCUST16,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,503,155,50,10
+    GROUPBOX        "Built-In Messages",IDC_STATIC,409,1,191,68
+    CONTROL         "RTX Task Switch",IDC_CHECKTASKSWITCH,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,415,13,68,10
+    GROUPBOX        "Custom Messages",IDC_STATIC,409,73,191,96
+    GROUPBOX        "Miscellaneous",IDC_STATIC,409,173,191,25
+    PUSHBUTTON      "Clear Window",IDC_BUTTONCLEARWINDOW,410,267,55,14
+    LISTBOX         IDC_LISTRXRTA,0,0,404,284,LBS_OWNERDRAWVARIABLE | LBS_NOINTEGRALHEIGHT | LBS_DISABLENOSCROLL | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_RTA, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 284
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_TRACELOG_UNKNOWN_ERROR "Unknown error %d (0x%08x)"
+    IDS_TRACELOG_FILTER     "Log files (*.log)|*.log|"
+    IDS_TRACELOG_FILE_SAVE  "Save Trace Log"
+    IDS_TRACELOG_FILE_SAVE_AS "Save Trace Log As"
+    IDS_TRACELOG_FILE_OPEN_FAILED 
+                            "Log file open failed [%s] with following error:"
+    IDS_TRACELOG_CAPTION    "Trace Log"
+    IDS_TRACELOG_DELETED_ENTRIES "Entries have been deleted from log (%d)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WSAEINTR            "®Network error: interrupted function call"
+    IDS_WSAEBADF            "®Network error: bad file descriptor"
+    IDS_WSAEACCESS          "®Network error: permission denied"
+    IDS_WSAEFAULT           "®Network error: bad address"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WSAEINVAL           "®Network error: invalid argument"
+    IDS_WSAEMFILE           "®Network error: too many open files"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WSAEWOULDBLOCK      "®Network error: resource temporarily unavailable"
+    IDS_WSAEINPROGRESS      "®Network error: operation now in progress"
+    IDS_WSAEALREADY         "®Network error: operation already in progress"
+    IDS_WSAENOTSOCK         "®Network error: socket operation on non-socket"
+    IDS_WSAEDESTADDRREQ     "®Network error: destination address required"
+    IDS_WSAEMSGSIZE         "®Network error: message too long"
+    IDS_WSAEPROTOTYPE       "®Network error: protocol wrong type for socket"
+    IDS_WSAENOPROTOOPT      "®Network error: bad protocol option"
+    IDS_WSAEPROTONOSUPPORT  "®Network error: protocol not supported"
+    IDS_WSAESOCKTNOSUPPORT  "®Network error: socket type not supported"
+    IDS_WSAEOPNOTSUPP       "®Network error: operation not supported"
+    IDS_WSAEPFNNOSUPPORT    "®Network error: protocol family not supported"
+    IDS_WSAEAFNOSUPPORT     "®Network error: address family not supported by protocol family"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WSAEADDRINUSE       "®Network error: Address already in use"
+    IDS_WSAADDRNOTAVAIL     "®Network error: cannot assign requested address"
+    IDS_WSAENETDOWN         "®Network error: network is down"
+    IDS_WSAENETUNREACH      "®Network error: network is unreachable"
+    IDS_WSAENETRESET        "®Network error: network dropped connection on reset"
+    IDS_WSAECONNABORTED     "®Network error: software caused connection abort"
+    IDS_WSAECONNRESET       "®Network error: connection reset by peer"
+    IDS_WSAENOBUFS          "®Network error: no buffer space available"
+    IDS_WSAEISCONN          "®Network error: socket is already connected"
+    IDS_WSAENOTCONN         "®Network error: socket is not connected"
+    IDS_WSAESHUTDOWN        "®Network error: cannot send after socket shutdown"
+    IDS_WSAETOOMANYREFS     "®Network error: too many references: cannot splice"
+    IDS_WSAETIMEDOUT        "®Network error: connection timed out"
+    IDS_WSAECONNREFUSED     "®Network error: connection refused"
+    IDS_WSAELOOP            "®Network error: too many levels of symbolic links"
+    IDS_WSAENAMETOOLONG     "®Network error: file name too long"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WSAEHOSTDOWN        "®Network error: host down"
+    IDS_WSAEHOSTUNREACH     "®Network error: host unreachable"
+    IDS_WSAENOTEMPTY        "®Network error: directory not empty"
+    IDS_WSAEPROCLIM         "®Network error: too many processes"
+    IDS_WSAEUSERS           "®Network error: too many users"
+    IDS_WSAEDQUOT           "®Network error: disk quota exceeded"
+    IDS_WSAESTATE           "®Network error: stale NFS file handle"
+    IDS_WSAEREMOTE          "®Network error: too many levels of remote in path"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WSASYSNOTREADY      "®Network error: network subsystem is unavailable"
+    IDS_WSAVERNOTSUPPORTED  "®Network error: WINSOCK.DLL version out of range"
+    IDS_WSANOTINITIALIZED   "®Network error: successful startup not yet performed"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WSAEDISCON          "®Network error: Disconnected"
+    IDS_WSAENOMORE          "®Network error: No more"
+    IDS_WSAECANCELLED       "®Network error: operation cancelled"
+    IDS_WSAEINVALID_PROC_TABLE "®Network error: Invalid proctable"
+    IDS_WSAEINVALIDPROVIDER "®Network error: invalid provider"
+    IDS_WSAEPROVIDERFAILEDINIT 
+                            "®Network error: Provider failed initialization"
+    IDS_WSASYSCALLFAILURE   "®Network error: System call failure"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WSASERVICE_NOT_FOUND "®Network error: Service not found"
+    IDS_WSATYPE_NOT_FOUND   "®Network error: Type not found"
+    IDS_WSA_E_NO_MORE       "®Network error: No more"
+    IDS_WSA_E_CANCELLED     "®Network error: Operation cancelled"
+    IDS_WSAEREFUSED         "®Network error: Connection refused"
+END
+
+STRINGTABLE 
+BEGIN
+    IDM_LOGWINDOW           "Creates or pops up the logging window"
+    IDM_CLEAR               "Delete"
+    IDM_TEST_COMMENT        "Test TraceMessage"
+    IDM_TEST_ERROR          "Test TraceError"
+    IDM_TEST_FORMATERROR    "Test TraceFormatError"
+    IDM_TRACE_FORMATMESSAGE "Trace TraceFormatMessage"
+    IDM_TEST_DATA           "Test TraceData (binary)"
+    IDM_TEST_DATA_STRING    "Test TraceData (string)"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_DEFCOM_DEVICE_LOG_ERR "  ERROR"
+    ID_DEFCOM_DEVICE_LOG_WRN "WARNING"
+    ID_DEFCOM_DEVICE_LOG_MSG "MESSAGE"
+    ID_DEFCOM_DEVICE_LOG_TRC "  TRACE"
+    ID_DEFCOM_DEVICE_LOG_COMMENT "COMMENT"
+    ID_DEFCOM_DEVICE_LOG_DATA_STRING "   DATA"
+    ID_DEFCOM_DEVICE_LOG_DATA_8BIT "   DATA"
+    ID_DEFCOM_DEVICE_LOG_DATA_16BIT "   DATA"
+    ID_DEFCOM_DEVICE_LOG_DATA_32BIT "   DATA"
+    ID_DEFCOM_DEVICE_LOG_DATA_64BIT "   DATA"
+END
+
+#endif    // English (U.K.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\UV3Socket_Test.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
