@@ -1,0 +1,60 @@
+Dependencies for Project 'EasyWeb', Target 'MCB1700': (DO NOT MODIFY !)
+CompilerVersion: 5060960::V5.06 update 7 (build 960)::.\ARMCC
+F (.\webpage.html)(0x4BC3E3E0)()
+F (.\startup_LPC17xx.s)(0x4B4A929E)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1"-IC:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include-ID:\Softwares_OS\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 533" --pd "LPC175x_6x SETA 1"--list .\lst\startup_lpc17xx.lst --xref -o .\obj\startup_lpc17xx.o --depend .\obj\startup_lpc17xx.d)
+F (.\system_LPC17xx.c)(0x4B4BCF5A)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include-IC:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include-ID:\Softwares_OS\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -DLPC175x_6x -D__FLASH-o .\obj\system_lpc17xx.o --omf_browse .\obj\system_lpc17xx.crf --depend .\obj\system_lpc17xx.d)
+I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8E9122)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include\LPC17xx.h)(0x58493F92)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\core_cm3.h)(0x5E8F3392)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_version.h)(0x5E8F3392)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_compiler.h)(0x5E836932)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_armcc.h)(0x5E8F3392)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\mpu_armv7.h)(0x5E8F3392)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include\system_LPC17xx.h)(0x58493F92)
+F (.\tcpip.h)(0x602F99FD)()
+F (.\tcpip.c)(0x603229D0)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include-IC:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include-ID:\Softwares_OS\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -DLPC175x_6x -D__FLASH-o .\obj\tcpip.o --omf_browse .\obj\tcpip.crf --depend .\obj\tcpip.d)
+I (tcpip.h)(0x602F99FD)
+I (EMAC.h)(0x6027F49C)
+I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E9122)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include\LPC17xx.h)(0x58493F92)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\core_cm3.h)(0x5E8F3392)
+I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8E9122)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_version.h)(0x5E8F3392)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_compiler.h)(0x5E836932)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_armcc.h)(0x5E8F3392)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\mpu_armv7.h)(0x5E8F3392)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include\system_LPC17xx.h)(0x58493F92)
+F (.\EMAC.c)(0x4A51D394)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include-IC:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include-ID:\Softwares_OS\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -DLPC175x_6x -D__FLASH-o .\obj\emac.o --omf_browse .\obj\emac.crf --depend .\obj\emac.d)
+I (EMAC.h)(0x6027F49C)
+I (tcpip.h)(0x602F99FD)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include\LPC17xx.h)(0x58493F92)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\core_cm3.h)(0x5E8F3392)
+I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8E9122)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_version.h)(0x5E8F3392)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_compiler.h)(0x5E836932)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_armcc.h)(0x5E8F3392)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\mpu_armv7.h)(0x5E8F3392)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include\system_LPC17xx.h)(0x58493F92)
+F (.\easyweb.c)(0x6032743F)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include-IC:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include-ID:\Softwares_OS\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -DLPC175x_6x -D__FLASH-o .\obj\easyweb.o --omf_browse .\obj\easyweb.crf --depend .\obj\easyweb.d)
+I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E9122)
+I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E9122)
+I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E9122)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include\LPC17xx.h)(0x58493F92)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\core_cm3.h)(0x5E8F3392)
+I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8E9122)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_version.h)(0x5E8F3392)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_compiler.h)(0x5E836932)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_armcc.h)(0x5E8F3392)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\mpu_armv7.h)(0x5E8F3392)
+I (C:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include\system_LPC17xx.h)(0x58493F92)
+I (easyweb.h)(0x4A028366)
+I (type.h)(0x4A028366)
+I (EMAC.h)(0x6027F49C)
+I (tcpip.h)(0x602F99FD)
+I (webpage.h)(0x60327D8A)
+F (.\Retarget.c)(0x4A028366)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include-IC:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include-ID:\Softwares_OS\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -DLPC175x_6x -D__FLASH-o .\obj\retarget.o --omf_browse .\obj\retarget.crf --depend .\obj\retarget.d)
+I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\rt_misc.h)(0x5E8E9122)
+I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5E8E9122)
+I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8E9122)
+F (.\easyweb.h)(0x4A028366)()
+F (.\Abstract.txt)(0x4BC3E682)()

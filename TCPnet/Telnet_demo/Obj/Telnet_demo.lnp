@@ -1,0 +1,13 @@
+--cpu Cortex-M3
+".\obj\telnet_demo.o"
+".\obj\telnet_uif.o"
+".\obj\net_config.o"
+".\obj\startup_lpc17xx.o"
+"D:\Softwares_OS\Keil_v5\ARM\RV31\LIB\TCP_CM3.lib"
+".\obj\emac_lpc17xx.o"
+".\obj\glcd_spi_lpc1700.o"
+".\obj\system_lpc17xx.o"
+--library_type=microlib --strict --scatter ".\Obj\Telnet_demo.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Lst\Telnet_demo.map" -o .\Obj\Telnet_demo.axf

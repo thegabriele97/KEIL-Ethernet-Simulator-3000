@@ -1,0 +1,10 @@
+.\obj\emac_lpc17xx.o: ..\Library\EMAC_LPC17xx.c
+.\obj\emac_lpc17xx.o: D:\Softwares_OS\Keil_v5\ARM\RV31\INC\Net_Config.h
+.\obj\emac_lpc17xx.o: D:\Softwares_OS\Keil_v5\ARM\RV31\INC\RTL.h
+.\obj\emac_lpc17xx.o: ..\Library\EMAC_LPC17xx.h
+.\obj\emac_lpc17xx.o: D:\Softwares_OS\Keil_v5\ARM\INC\NXP\LPC17xx\LPC17xx.h
+.\obj\emac_lpc17xx.o: D:\Softwares_OS\Keil_v5\ARM\CMSIS\Include\core_cm3.h
+.\obj\emac_lpc17xx.o: D:\Softwares_OS\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\obj\emac_lpc17xx.o: D:\Softwares_OS\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h
+.\obj\emac_lpc17xx.o: D:\Softwares_OS\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h
+.\obj\emac_lpc17xx.o: D:\Softwares_OS\Keil_v5\ARM\INC\NXP\LPC17xx\system_LPC17xx.h
