@@ -1,0 +1,55 @@
+****************************************************************
+NOTE: THIS EXAMPLE WILL NOT RE-COMPILE WITHOUT RL-ARM INSTALLED!
+****************************************************************
+
+This is a HTTP Server example prebuild for the Keil MCB1700 
+Evaluation Board. It also shows how to use the Web Server CGI 
+interface. 
+
+Use this example to connect MCB1700 Board to a LAN with DHCP
+server (most LANs have this). This example will configure the 
+LAN network parameters automatically using a DHCP protocol.
+
+You may connect MCB1700 Board to PC directly over a crosslink
+network cable. In this case configure a PC to use a static 
+IP address 192.168.0.1
+
+If after a timeout of 5 seconds DHCP did not obtain an IP address,
+this example will use a static IP address 192.168.0.100
+
+The WEB pages are included into the project under HTTP Files 
+group. You can simply add or remove a page or image. Web files
+which are compiled into the project are added to the 'Web.inp'
+Web Converter input file.
+
+To use this example:
+
+  - Connect ULINK to the MCB1700 Evaluation Board and power the board up. 
+  - In uVision - load the project file and execute Flash - Download.
+  - Connect the MCB1700 Board to a LAN with DHCP server (most LANs have this)
+  - Connect your computer to the same LAN and open your web browser and 
+    enter the address http://mcb1700/ or http://<boards IP address>/
+    
+This opens the demo page running on the MCB2300 Board. Enter:
+
+User name: admin 
+Password: <none> 
+
+You can change the password at runtime on page 'system'
+
+The HTTP_demo example is available for several targets:
+
+MCB1700:       Standalone (no RTX Kernel) application.
+               Program code is loaded into on-chip flash.
+
+MCB1700 Debug: Standalone (no RTX Kernel) with debug output.
+               Debug level configured in Net_Debug.c configuration file.
+               Connect a serial cable to RS232 COM1 port using
+               HyperTerminal at 115200 baud, 8-bits, no parity,
+               1 stop bit, XON/XOFF.
+
+MCB1700 RTX:   The same example configured for RTX Kernel.
+
+This pre-compiled version is for target "MCB1700" and may be 
+downloaded using a evalution version of the RealView MDK-ARM package 
+(available at www.keil.com/demo).

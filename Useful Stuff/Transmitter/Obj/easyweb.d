@@ -1,0 +1,17 @@
+.\obj\easyweb.o: easyweb.c
+.\obj\easyweb.o: D:\Softwares_OS\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\obj\easyweb.o: D:\Softwares_OS\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\obj\easyweb.o: D:\Softwares_OS\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\obj\easyweb.o: C:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include\LPC17xx.h
+.\obj\easyweb.o: C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\core_cm3.h
+.\obj\easyweb.o: D:\Softwares_OS\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\obj\easyweb.o: C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_version.h
+.\obj\easyweb.o: C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_compiler.h
+.\obj\easyweb.o: C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_armcc.h
+.\obj\easyweb.o: C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\mpu_armv7.h
+.\obj\easyweb.o: C:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include\system_LPC17xx.h
+.\obj\easyweb.o: easyweb.h
+.\obj\easyweb.o: type.h
+.\obj\easyweb.o: EMAC.h
+.\obj\easyweb.o: tcpip.h
+.\obj\easyweb.o: webpage.h

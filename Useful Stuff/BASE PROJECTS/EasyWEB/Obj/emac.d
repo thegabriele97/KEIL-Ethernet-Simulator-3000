@@ -1,0 +1,11 @@
+.\obj\emac.o: EMAC.c
+.\obj\emac.o: EMAC.h
+.\obj\emac.o: tcpip.h
+.\obj\emac.o: C:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include\LPC17xx.h
+.\obj\emac.o: C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\core_cm3.h
+.\obj\emac.o: D:\Softwares_OS\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\obj\emac.o: C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_version.h
+.\obj\emac.o: C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_compiler.h
+.\obj\emac.o: C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\cmsis_armcc.h
+.\obj\emac.o: C:\Users\gabri\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Include\mpu_armv7.h
+.\obj\emac.o: C:\Users\gabri\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.0\Device\Include\system_LPC17xx.h
