@@ -140,7 +140,7 @@ echo F|xcopy /d /Y "$(TargetDir)$(ProjectName).dll" "D:\Softwares_OS\Keil_v5\ARM
       <Command>copy "$(TargetDir)$(ProjectName).dll" "D:\Softwares_OS\Keil_v5\ARM\BIN\$(ProjectName).dll"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Outputs> D:\Softwares_OS\Keil_v5\ARM\BIN\$(ProjectName).dll</Outputs>
+      <Outputs>D:\Softwares_OS\Keil_v5\ARM\BIN\$(ProjectName).dll</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
