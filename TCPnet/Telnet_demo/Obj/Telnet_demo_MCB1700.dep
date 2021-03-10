@@ -1,52 +1,0 @@
-Dependencies for Project 'Telnet_demo', Target 'MCB1700': (DO NOT MODIFY !)
-CompilerVersion: 5060960::V5.06 update 7 (build 960)::.\ARMCC
-F (.\Telnet_demo.c)(0x6027ED53)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I ..\Library-ID:\Softwares_OS\Keil_v5\ARM\RV31\INC-ID:\Softwares_OS\Keil_v5\ARM\CMSIS\Include-ID:\Softwares_OS\Keil_v5\ARM\INC\NXP\LPC17xx-D__UVISION_VERSION="533"-o .\obj\telnet_demo.o --omf_browse .\obj\telnet_demo.crf --depend .\obj\telnet_demo.d)
-I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E9122)
-I (D:\Softwares_OS\Keil_v5\ARM\RV31\INC\RTL.h)(0x559D42E8)
-I (D:\Softwares_OS\Keil_v5\ARM\INC\NXP\LPC17xx\LPC17xx.H)(0x559D4422)
-I (D:\Softwares_OS\Keil_v5\ARM\CMSIS\Include\core_cm3.h)(0x559D4E0A)
-I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8E9122)
-I (D:\Softwares_OS\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h)(0x559D4E0A)
-I (D:\Softwares_OS\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h)(0x559D4E0A)
-I (D:\Softwares_OS\Keil_v5\ARM\INC\NXP\LPC17xx\system_LPC17xx.h)(0x5703BE82)
-I (..\Library\GLCD.h)(0x4AC18DDC)
-F (.\Telnet_uif.c)(0x4AF95390)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I ..\Library-ID:\Softwares_OS\Keil_v5\ARM\RV31\INC-ID:\Softwares_OS\Keil_v5\ARM\CMSIS\Include-ID:\Softwares_OS\Keil_v5\ARM\INC\NXP\LPC17xx-D__UVISION_VERSION="533"-o .\obj\telnet_uif.o --omf_browse .\obj\telnet_uif.crf --depend .\obj\telnet_uif.d)
-I (D:\Softwares_OS\Keil_v5\ARM\RV31\INC\Net_Config.h)(0x559D42E8)
-I (D:\Softwares_OS\Keil_v5\ARM\RV31\INC\RTL.h)(0x559D42E8)
-I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E9122)
-I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E9122)
-F (.\Net_Config.c)(0x559D42E8)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I ..\Library-ID:\Softwares_OS\Keil_v5\ARM\RV31\INC-ID:\Softwares_OS\Keil_v5\ARM\CMSIS\Include-ID:\Softwares_OS\Keil_v5\ARM\INC\NXP\LPC17xx-D__UVISION_VERSION="533"-o .\obj\net_config.o --omf_browse .\obj\net_config.crf --depend .\obj\net_config.d)
-I (D:\Softwares_OS\Keil_v5\ARM\RV31\INC\Net_Config.h)(0x559D42E8)
-I (D:\Softwares_OS\Keil_v5\ARM\RV31\INC\RTL.h)(0x559D42E8)
-I (D:\Softwares_OS\Keil_v5\ARM\RV31\INC\Net_lib.c)(0x559D42E8)
-F (.\Net_Debug.c)(0x559D42E8)()
-F (.\startup_LPC17xx.s)(0x4B4A8C0E)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --16 --apcs=interwork --pd "__MICROLIB SETA 1" -I D:\Softwares_OS\Keil_v5\ARM\RV31\LIB-ID:\Softwares_OS\Keil_v5\ARM\RV31\INC-ID:\Softwares_OS\Keil_v5\ARM\CMSIS\Include-ID:\Softwares_OS\Keil_v5\ARM\INC\NXP\LPC17xx--pd "__UVISION_VERSION SETA 533"--list .\lst\startup_lpc17xx.lst --xref -o .\obj\startup_lpc17xx.o --depend .\obj\startup_lpc17xx.d)
-F (D:\Softwares_OS\Keil_v5\ARM\RV31\LIB\TCP_CM3.lib)(0x55E5B942)()
-F (D:\Softwares_OS\Keil_v5\ARM\RV31\LIB\TCPD_CM3.lib)(0x55E5B942)()
-F (..\Library\EMAC_LPC17xx.c)(0x4AF95392)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I ..\Library-ID:\Softwares_OS\Keil_v5\ARM\RV31\INC-ID:\Softwares_OS\Keil_v5\ARM\CMSIS\Include-ID:\Softwares_OS\Keil_v5\ARM\INC\NXP\LPC17xx-D__UVISION_VERSION="533"-o .\obj\emac_lpc17xx.o --omf_browse .\obj\emac_lpc17xx.crf --depend .\obj\emac_lpc17xx.d)
-I (D:\Softwares_OS\Keil_v5\ARM\RV31\INC\Net_Config.h)(0x559D42E8)
-I (D:\Softwares_OS\Keil_v5\ARM\RV31\INC\RTL.h)(0x559D42E8)
-I (..\Library\EMAC_LPC17xx.h)(0x4AF95392)
-I (D:\Softwares_OS\Keil_v5\ARM\INC\NXP\LPC17xx\LPC17xx.h)(0x559D4422)
-I (D:\Softwares_OS\Keil_v5\ARM\CMSIS\Include\core_cm3.h)(0x559D4E0A)
-I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8E9122)
-I (D:\Softwares_OS\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h)(0x559D4E0A)
-I (D:\Softwares_OS\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h)(0x559D4E0A)
-I (D:\Softwares_OS\Keil_v5\ARM\INC\NXP\LPC17xx\system_LPC17xx.h)(0x5703BE82)
-F (..\Library\GLCD_SPI_LPC1700.c)(0x4AC18DDC)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I ..\Library-ID:\Softwares_OS\Keil_v5\ARM\RV31\INC-ID:\Softwares_OS\Keil_v5\ARM\CMSIS\Include-ID:\Softwares_OS\Keil_v5\ARM\INC\NXP\LPC17xx-D__UVISION_VERSION="533"-o .\obj\glcd_spi_lpc1700.o --omf_browse .\obj\glcd_spi_lpc1700.crf --depend .\obj\glcd_spi_lpc1700.d)
-I (D:\Softwares_OS\Keil_v5\ARM\INC\NXP\LPC17xx\lpc17xx.h)(0x559D4422)
-I (D:\Softwares_OS\Keil_v5\ARM\CMSIS\Include\core_cm3.h)(0x559D4E0A)
-I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8E9122)
-I (D:\Softwares_OS\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h)(0x559D4E0A)
-I (D:\Softwares_OS\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h)(0x559D4E0A)
-I (D:\Softwares_OS\Keil_v5\ARM\INC\NXP\LPC17xx\system_LPC17xx.h)(0x5703BE82)
-I (..\Library\GLCD.h)(0x4AC18DDC)
-I (..\Library\Font_24x16.h)(0x4AA882DA)
-F (..\Library\system_LPC17xx.c)(0x4B4BD120)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I ..\Library-ID:\Softwares_OS\Keil_v5\ARM\RV31\INC-ID:\Softwares_OS\Keil_v5\ARM\CMSIS\Include-ID:\Softwares_OS\Keil_v5\ARM\INC\NXP\LPC17xx-D__UVISION_VERSION="533"-o .\obj\system_lpc17xx.o --omf_browse .\obj\system_lpc17xx.crf --depend .\obj\system_lpc17xx.d)
-I (D:\Softwares_OS\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8E9122)
-I (D:\Softwares_OS\Keil_v5\ARM\INC\NXP\LPC17xx\LPC17xx.h)(0x559D4422)
-I (D:\Softwares_OS\Keil_v5\ARM\CMSIS\Include\core_cm3.h)(0x559D4E0A)
-I (D:\Softwares_OS\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h)(0x559D4E0A)
-I (D:\Softwares_OS\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h)(0x559D4E0A)
-I (D:\Softwares_OS\Keil_v5\ARM\INC\NXP\LPC17xx\system_LPC17xx.h)(0x5703BE82)
-F (.\Abstract.txt)(0x4AA882D6)()
