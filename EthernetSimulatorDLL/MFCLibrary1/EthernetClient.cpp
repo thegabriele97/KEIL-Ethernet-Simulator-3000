@@ -32,7 +32,7 @@ EthernetClient::~EthernetClient() {
 		}
 	}
 	
-	TerminateThread(this->hThread, -1);
+	TerminateThread(this->hThread, 0x0);
 	CloseHandle(this->hPipe);
 }
 

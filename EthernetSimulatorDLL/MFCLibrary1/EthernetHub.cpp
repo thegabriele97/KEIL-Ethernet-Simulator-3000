@@ -6,7 +6,6 @@
 #include <memory>
 
 static DWORD WINAPI HandlerThread(LPVOID param);
-//DWORD WINAPI PoolerThread(LPVOID arg);
 
 EthernetHub::EthernetHub(std::string hubName) {
 	this->clientsCount = 0;
@@ -21,7 +20,8 @@ EthernetHub::EthernetHub(std::string hubName) {
 }
 
 EthernetHub::~EthernetHub() {
-	
+	TerminateThread(this->hThread, 0x0);
+	CloseHandle(this->hPipe);
 }
 
 BOOL EthernetHub::CreationSucceded() {
@@ -33,14 +33,10 @@ BOOL EthernetHub::FailedBcsAlreadyExists() {
 }
 
 void EthernetHub::StartHandling() {
-	HANDLE mainThread, poolThread;
-	DWORD mainThreadId, poolThreadId;
+	DWORD mainThreadId;
 
-	mainThread = CreateThread(NULL, 0, HandlerThread, this, 0, &mainThreadId);
-	if (mainThread == NULL) throw std::exception("An error occurred while creating the handler thread");
-
-	/*poolThread = CreateThread(NULL, 0, PoolerThread, this, 0, &poolThreadId);
-	if (poolThread == NULL) throw std::exception("An error occurred while creating the pooler thread");*/
+	this->hThread = CreateThread(NULL, 0, HandlerThread, this, 0, &mainThreadId);
+	if (this->hThread == NULL) throw std::exception("An error occurred while creating the handler thread");
 }
 
 HANDLE EthernetHub::GetPipe() {

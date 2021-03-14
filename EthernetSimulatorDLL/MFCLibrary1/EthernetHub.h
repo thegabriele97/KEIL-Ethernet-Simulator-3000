@@ -10,6 +10,7 @@ private:
 	std::string hubName;
 	std::string PipeName;
 	HANDLE hPipe;
+	HANDLE hThread;
 	DWORD clientsCount;
 	std::map<DWORD, std::string> clientHandle;
 
