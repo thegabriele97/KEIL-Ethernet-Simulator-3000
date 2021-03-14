@@ -168,13 +168,9 @@ static DWORD WINAPI HandlerThread(LPVOID hubPtr) {
 			}
 
 			DisconnectNamedPipe(hub->GetPipe());
-			Sleep(500);
+			Sleep(100);
 		}
 	}
 
 	return -1;
 }
-
-/*DWORD WINAPI PoolerThread(LPVOID arg) {
-
-}*/
