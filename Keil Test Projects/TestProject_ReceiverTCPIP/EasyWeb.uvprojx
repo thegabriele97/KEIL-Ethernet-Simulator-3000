@@ -116,7 +116,7 @@
           <TargetDllName>SARMCM3.DLL</TargetDllName>
           <TargetDllArguments>-MPU</TargetDllArguments>
           <TargetDlgDll>TARMP1.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pLPC1768 -dMFCLibrary1 -dLandTiger</TargetDlgDllArguments>
+          <TargetDlgDllArguments>-pLPC1768</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
