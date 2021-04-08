@@ -114,7 +114,7 @@ int main(void) {
 
 void DoNetworkWork(void) {
   static fsm_t state = FIRST_MESSAGE;
-	int len = 0;
+	int len = 0, i;
 	cmd_t cmd;
 	
 	LPC_GPIO2->FIOPIN |= ((SocketStatus & SOCK_CONNECTED) 		 >> SOCK_CONNECTED);
@@ -161,7 +161,7 @@ void DoNetworkWork(void) {
 			
 					// Copying the RX_BUF inside our buf
 					memcpy(buff, TCP_RX_BUF, TCPRxDataCount);
-					buff[TCPRxDataCount-2] = 0x00; // NULL Char needed, removing last \r\n
+					buff[TCPRxDataCount] = 0x00; // NULL Char needed, removing last \r\n
 					TCPReleaseRxBuffer();
 					
 					cmd = parseBuff((char *)buff, TCPRxDataCount);
@@ -175,10 +175,53 @@ void DoNetworkWork(void) {
 						//len += sprintf((char *)(buff + len), "\tcd\t: navigate through the virtual file system\r\n");
 						//len += sprintf((char *)(buff + len), "\tmkdir\t: create a directory in the virtual file system\r\n");
 						//len += sprintf((char *)(buff + len), "\ttouch\t: create a file in the virtual file system\r\n");
+						len += sprintf((char *)(buff + len), "\tgpio2\t: shows the status of the GPIO #2. With additional 3 args, is possible to set for a pin, the in/out and the status\r\n");
 						len += sprintf((char *)(buff + len), "\techo\t: echo reply\r\n");
 						len += sprintf((char *)(buff + len), "\r\n");
 					} else if (strcmp(cmd.cmd, "echo") == 0) {
 						len  = sprintf((char *)buff, "%s\r\n", cmd.args);
+					} else if (strcmp(cmd.cmd, "gpio2") == 0) {
+						
+						len = 0;
+						if (strlen(cmd.args) < 5) {
+							len  = sprintf((char *)buff, "GPIO #2 Status:\r\n\n");
+							
+							len += sprintf((char *)(buff + len), "Pin #\t");
+							for (i = 0; i < 14; i++) {
+								len += sprintf((char *)(buff + len), "2.%d\t", i);
+							}
+							
+							len += sprintf((char *)(buff + len), "\r\nOut/In\t");
+							for (i = 0; i < 14; i++) {
+								len += sprintf((char *)(buff + len), "%d\t", (LPC_GPIO2->FIODIR >> i) & 0x1);
+							}
+							
+							len += sprintf((char *)(buff + len), "\r\nHi/Lo\t");
+							for (i = 0; i < 14; i++) {
+								len += sprintf((char *)(buff + len), "%d\t", (LPC_GPIO2->FIOPIN >> i) & 0x1);
+							}
+							
+							len += sprintf((char *)(buff + len), "\r\n\n");
+							
+							//len += sprintf((char *)(buff + len), "Pin #\tIn/Out\tHigh/Low\r\n");
+							
+							//for (i = 0; i < 14; i++) {
+							//	len += sprintf((char *)(buff + len), "2.%d\t%d\t%d\r\n", i, (LPC_GPIO2->FIODIR >> i) & 0x1, (LPC_GPIO2->FIOPIN >> i) & 0x1);
+							//}
+							
+						} else if (strlen(cmd.args) >= 5) {
+							
+							for (i = 0; i < 3; i++) {
+								cmd.args[i] = cmd.args[i << 1] - '0';
+							}
+							
+							LPC_GPIO2->FIODIR &= ~(1 << cmd.args[0]);
+							LPC_GPIO2->FIODIR |=  (cmd.args[1] << cmd.args[0]);
+							
+							LPC_GPIO2->FIOPIN &= ~(1 << cmd.args[0]);
+							LPC_GPIO2->FIOPIN |=  (cmd.args[2] << cmd.args[0]);
+						}
+						
 					} else {
 						len  = sprintf((char *)buff, "Command not recognized! Type 'help' to know more.\r\n");
 					}
@@ -202,9 +245,12 @@ void DoNetworkWork(void) {
 
 cmd_t parseBuff(char *buff, unsigned int len) {
 	cmd_t cmd;
+	char *_ibuff;
 	
 	cmd.cmd = buff;
-	for (; buff < buff + len; buff++) {
+	*(buff + len) = 0x0;
+	
+	for (_ibuff = buff; buff < _ibuff + len; buff++) {
 		if (isspace(*buff) || isblank(*buff)) {
 			*buff = 0x0;
 			cmd.args = buff + 1;
