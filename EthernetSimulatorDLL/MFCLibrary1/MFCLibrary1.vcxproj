@@ -198,6 +198,7 @@ echo F|xcopy /d /Y "$(TargetDir)$(ProjectName).dll" "D:\Softwares_OS\Keil_v5\ARM
   <ItemGroup>
     <ClCompile Include="EthernetClient.cpp" />
     <ClCompile Include="EthernetHub.cpp" />
+    <ClCompile Include="EthernetRouter.cpp" />
     <ClCompile Include="MFCLibrary1.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -215,6 +216,7 @@ echo F|xcopy /d /Y "$(TargetDir)$(ProjectName).dll" "D:\Softwares_OS\Keil_v5\ARM
     <ClInclude Include="EthernetClient.h" />
     <ClInclude Include="EthernetCommon.h" />
     <ClInclude Include="EthernetHub.h" />
+    <ClInclude Include="EthernetRouter.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MFCLibrary1.h" />
     <ClInclude Include="pch.h" />

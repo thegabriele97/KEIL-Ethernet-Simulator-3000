@@ -27,6 +27,9 @@
     <ClCompile Include="EthernetClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EthernetRouter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MFCLibrary1.def">
@@ -62,6 +65,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EthernetCommon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EthernetRouter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

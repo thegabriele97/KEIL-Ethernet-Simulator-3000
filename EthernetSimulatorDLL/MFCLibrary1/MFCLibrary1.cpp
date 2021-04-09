@@ -7,6 +7,7 @@
 #include "AGSI.h"
 #include "EthernetHub.h"
 #include "EthernetClient.h"
+#include "EthernetRouter.h"
 #include <memory>
 
 #ifdef _DEBUG
@@ -21,6 +22,7 @@ AGSICONFIG  AgsiConfig;
 AGSIFUNCS   Agsi;
 EthernetHub Hub("AwesomeEthernetHub");
 EthernetClient* Client;
+EthernetRouter* Router;
 
 static BOOL ISPOST_INIT = TRUE;
 static AGSIADDR CurrentTxDescriptor;
@@ -87,6 +89,9 @@ BOOL InitAction(AGSICONFIG *cfg) {
 
     retVal &= Client->ConnectToHub();
     if (retVal) Client->StartHandling(OnNewFrameAvailableCallback);
+
+    Router = new EthernetRouter(Hub, new BYTE[6]{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 });
+    Router->StartRouterHandling();
 
     return retVal;
 }
