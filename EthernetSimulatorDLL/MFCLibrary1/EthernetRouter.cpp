@@ -3,6 +3,7 @@
 
 #include <sstream>
 #include <iomanip>
+#include <string>
 
 #define DEFAULT_BUFLEN		257
 #define FRAME_IP            0x0800
@@ -10,7 +11,7 @@
 #define SWAPB(Word)         ((WORD)((Word) << 8) | ((Word) >> 8))
 
 static DWORD WINAPI HandlerThread(LPVOID routerPtr);
-static void OnNewFrameReceivedCallback(BYTE* frame, DWORD frameSize);
+static void OnNewFrameReceivedCallback(BYTE* frame, DWORD frameSize, LPVOID args);
 
 static void WriteWBE(BYTE* Add, WORD Data);
 void WriteDWBE(unsigned char* Add, unsigned long Data);
@@ -19,10 +20,11 @@ unsigned short CalcChecksum(void* Start, WORD Count, BYTE IsTCP, WORD MyIP[2], W
 EthernetRouter::EthernetRouter(EthernetHub& hub, BYTE RouterMACAddr[6]) : EthernetClient(hub) {
 	
 	this->MACAddr = std::vector<BYTE>(RouterMACAddr, RouterMACAddr + 6);
-	
+	this->ClientSocket = INVALID_SOCKET;
+
 	this->ConnectToHub();
 	//TODO: this->StartHandling();
-	this->StartHandling(OnNewFrameReceivedCallback);
+	this->StartHandling(OnNewFrameReceivedCallback, this);
 }
 
 void EthernetRouter::StartRouterHandling() {
@@ -70,6 +72,9 @@ static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 	listen(main_socket, SOMAXCONN);
 	int c = sizeof(client);
 
+	HANDLE hEvent = CreateEventA(NULL, TRUE, FALSE, "Global\\EVT:SYNACKREC");
+	if (hEvent == NULL || hEvent == INVALID_HANDLE_VALUE) throw std::exception("An fatal error occurred during the creation of the Event");
+
 	while (TRUE) {
 
 		SOCKET new_socket = accept(main_socket, (struct sockaddr*)&client, &c);
@@ -79,22 +84,38 @@ static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 			continue;
 		}
 
+		router->ClientSocket = new_socket;
+
 		// We have to open a connection towards the client, so SYN
 		router->TCPSeqNr = 0;
 		router->TCPAckNr = 1;
 		auto tcpFrameOut = router->PrepareTCPFrame(TCP_CODE_SYN);
 		router->SendData(&tcpFrameOut[0], tcpFrameOut.size());
 
-		Sleep(10000);
+		// Now we wait for a SYN ACK
+		WaitForSingleObject(hEvent, INFINITE);
+		ResetEvent(hEvent);
+
+		// Inc the SEQ number
 		router->TCPSeqNr++;
+
+		// SYN ACK recevied. Sending ACK
+		tcpFrameOut = router->PrepareTCPFrame(TCP_CODE_ACK);
+		router->SendData(&tcpFrameOut[0], tcpFrameOut.size());
+
 
 		// Receving Data - Ethernet Frame
 		int iResult = 0;
 		do {
+
 			iResult = recv(new_socket, recvbuf, DEFAULT_BUFLEN, 0);
 			recvbuf[iResult] = '\0';
 
-			auto tcpFrame = router->PrepareTCPFrame(std::vector<BYTE>(recvbuf, recvbuf + iResult));
+			if (iResult > 0) {
+				auto tcpFrame = router->PrepareTCPFrame(std::vector<BYTE>(recvbuf, recvbuf + iResult));
+				router->SendData(&tcpFrame[0], tcpFrame.size());
+				router->TCPSeqNr += iResult;
+			}
 			
 			/*std::stringstream ss;
 			ss << std::hex;
@@ -104,11 +125,11 @@ static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 
 			auto x = ss.str();*/
 
-			router->SendData(&tcpFrame[0], tcpFrame.size());
 
 		} while (iResult > 0);
 
 		//shutdown(router->GetMainSocket(), SD_RECEIVE);
+		router->ClientSocket = INVALID_SOCKET;
 		closesocket(new_socket);
 	}
 
@@ -118,17 +139,50 @@ static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 	return 1;
 }
 
-static void OnNewFrameReceivedCallback(BYTE* frame, DWORD frameSize) {
+static void OnNewFrameReceivedCallback(BYTE* frame, DWORD frameSize, LPVOID args) {
+	EthernetRouter* router;
 
-	auto a = frame[TCP_DATA_CODE_OFS] == SWAPB(0x5000 | (TCP_CODE_SYN | TCP_CODE_ACK));
+	// TODO: here we should filter all incoming packet
+	// and leave only brodcast or towards our router's MAC addr
 
-	std::stringstream ss;
-	ss << std::hex;
+	router = (EthernetRouter*)args;
 
-	for (int i(0); i < frameSize; ++i)
-		ss << std::setw(2) << std::setfill('0') << (int)frame[i];
+	switch (frame[TCP_DATA_CODE_OFS + 1]) {
+	
+	case (TCP_CODE_SYN | TCP_CODE_ACK): {
 
-	auto x = ss.str();
+		// We have to say to the router that we received a SYN ACK
+		HANDLE hEvent = OpenEventA(EVENT_ALL_ACCESS, TRUE, "Global\\EVT:SYNACKREC");
+		if (hEvent == NULL || hEvent == INVALID_HANDLE_VALUE) return;
+
+		SetEvent(hEvent);
+		break;
+	}
+
+	default: {
+
+		// We received a normal TCP data packet, we have to forward it to the socket
+		std::stringstream ss;
+		ss << std::hex;
+
+		for (int i(0); i < frameSize; ++i)
+			ss << std::setw(2) << std::setfill('0') << (int)frame[i];
+
+		auto x = ss.str();
+
+		int datalength = frameSize - (TCP_CHKSUM_OFS + 4);
+		send(router->ClientSocket, (char *)TCP_TX_BUF(frame), datalength, 0);
+
+		router->TCPAckNr += datalength; // next ACK will ack this frame
+		
+		// SENDING ACK
+		auto tcpFrameOut = router->PrepareTCPFrame(TCP_CODE_ACK);
+		router->SendData(&tcpFrameOut[0], tcpFrameOut.size());
+
+		break;
+	}
+
+	}
 
 }
 

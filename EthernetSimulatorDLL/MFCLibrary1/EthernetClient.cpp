@@ -125,7 +125,18 @@ void EthernetClient::SendData(BYTE* frame, DWORD frameSize) {
 void EthernetClient::StartHandling(void(*callback)(BYTE* frame, DWORD frameSize)) {
 	DWORD mainThreadId;
 
-	this->callback = callback;
+	this->callback_a = callback;
+	this->callback_args = NULL;
+
+	this->hThread = CreateThread(NULL, 0, HandlerThread, this, 0, &mainThreadId);
+	if (this->hThread == NULL) throw std::exception("An error occurred while creating the handler thread");
+}
+
+void EthernetClient::StartHandling(void(*callback)(BYTE* frame, DWORD frameSize, LPVOID args), LPVOID args) {
+	DWORD mainThreadId;
+
+	this->callback_b = callback;
+	this->callback_args = args;
 
 	this->hThread = CreateThread(NULL, 0, HandlerThread, this, 0, &mainThreadId);
 	if (this->hThread == NULL) throw std::exception("An error occurred while creating the handler thread");
@@ -140,7 +151,13 @@ DWORD EthernetClient::GetClientIndex() {
 }
 
 void EthernetClient::InvokeCallback(BYTE* frame, DWORD frameSize) {
-	this->callback(frame, frameSize);
+	
+	if (this->callback_args == NULL) {
+		this->callback_a(frame, frameSize);
+	} else {
+		this->callback_b(frame, frameSize, this->callback_args);
+	}
+
 }
 
 static DWORD WINAPI HandlerThread(LPVOID clientPtr) {

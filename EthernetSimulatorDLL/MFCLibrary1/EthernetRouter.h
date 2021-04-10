@@ -112,6 +112,8 @@ public:
 	DWORD TCPSeqNr;
 	DWORD TCPAckNr;
 
+	SOCKET ClientSocket;
+
 	void StartRouterHandling();
 	std::vector<BYTE> PrepareTCPFrame(unsigned short TCPCode);
 	std::vector<BYTE> PrepareTCPFrame(std::vector<BYTE> data);
