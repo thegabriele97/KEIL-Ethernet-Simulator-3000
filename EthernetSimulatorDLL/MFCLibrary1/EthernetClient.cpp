@@ -178,19 +178,24 @@ static DWORD WINAPI HandlerThread(LPVOID clientPtr) {
 		WaitForSingleObject(hEvent, INFINITE);
 		ResetEvent(hEvent);
 		
+		retVal = false;
 		fConnected = ConnectNamedPipe(client->GetPipe(), NULL) ? TRUE : (GetLastError() == ERROR_PIPE_CONNECTED);
 		if (fConnected) {
 			retVal = ReadFile(client->GetPipe(), &frameSize, sizeof frameSize, &nBytes, NULL);
 
 			buffer = std::unique_ptr<BYTE>(new BYTE[frameSize]);
 			retVal &= ReadFile(client->GetPipe(), buffer.get(), frameSize, &nBytes, NULL);
+		}
+		
+		// We free the pipe before calling the Callback
+		// Maybe it'll need it so let's free it!
+		DisconnectNamedPipe(client->GetPipe());
 
-			if (retVal) {
-				client->InvokeCallback(buffer.get(), frameSize);
-			}
+		// If the flag is set, we can call the callback without problems (I hope! :) )
+		if (retVal) {
+			client->InvokeCallback(buffer.get(), frameSize);
 		}
 
-		DisconnectNamedPipe(client->GetPipe());
 	}
 
 	return -1;
