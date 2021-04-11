@@ -152,14 +152,21 @@ DECLARE_ACCESSMEM_HANDLER(OnEMACTxProduceIndexChangeHandler) {
 }
 
 void OnNewFrameAvailableCallback(BYTE* frame, DWORD frameSize) {
-    DWORD consumeIdx, produceIdx, nRxFrag;
+    DWORD produceIdx, nRxFrag;
     AGSIADDR rptr_ptr, stat_ptr, rptr;
 
-    // We need to know the actual consume index, it's used as index for current descriptor
-    Agsi.ReadMemory(LPC_EMAC_RxConsumeIndex, sizeof consumeIdx, (BYTE*)&consumeIdx);
+    // We need to know NOT the actual Consume Index,
+    // but the Produce Index!! That if there are no pending data in the 
+    // receiver buffer, it will be equal to the consume index, else
+    // it will be n-steps ahead. This is done in order to not 
+    // overwrite possible data while they are processed
+    // maybe because the receiver code is under debugging. 
+    // This is why the rx buffer is made of 4 fragments (or at least more then the tx buffer),
+    // because the receiver maybe is slow to read them
+    Agsi.ReadMemory(LPC_EMAC_RxProduceIndex, sizeof produceIdx, (BYTE*)&produceIdx);
 
-    rptr_ptr = CurrentRxDescriptor + 8 * consumeIdx;
-    stat_ptr = (CurrentRxDescriptor + 4 * 8) + 8 * consumeIdx;
+    rptr_ptr = CurrentRxDescriptor + 8 * produceIdx;
+    stat_ptr = (CurrentRxDescriptor + 4 * 8) + 8 * produceIdx;
 
     // Obtaining buffer pointer
     Agsi.ReadMemory(rptr_ptr, sizeof rptr, (BYTE*)&rptr);
@@ -171,13 +178,14 @@ void OnNewFrameAvailableCallback(BYTE* frame, DWORD frameSize) {
     Agsi.WriteMemory(stat_ptr, sizeof frameSize, (BYTE*)&frameSize);
     Agsi.WriteMemory(rptr, frameSize, frame); // Writing in current Rx Buffer
 
-    // Getting current produce Index and increment it by 3
-    // Wrapping it to the number of maximum fragments loaded in the EMAC device
-    Agsi.ReadMemory(LPC_EMAC_RxProduceIndex, sizeof produceIdx, (BYTE*)&produceIdx);
+    // The current produce Index is incremented it by 1,
+    // and wrapped to the number of maximum fragments available in the receiver's EMAC peripheral
     Agsi.ReadMemory(LPC_EMAC_RxDescriptorNumber, sizeof nRxFrag, (BYTE*)&nRxFrag);
     
-    // Committing the result: the EMAC drive will notice it
-    if (++produceIdx > (nRxFrag)) produceIdx = 0;
+    // Committing the result: the receiver will notice it
+    // and will use its consume idx as pointer that is equal to our ex produce idx used in a few lines above
+    // (at the beginning of this function)
+    if (++produceIdx > nRxFrag) produceIdx = 0;
     Agsi.WriteMemory(LPC_EMAC_RxProduceIndex, sizeof produceIdx, (BYTE*)&produceIdx);
 
     return;
