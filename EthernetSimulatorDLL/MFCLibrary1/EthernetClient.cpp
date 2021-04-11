@@ -171,7 +171,7 @@ static DWORD WINAPI HandlerThread(LPVOID clientPtr) {
 
 	auto name_s = std::string("Global\\EVT:" + std::to_string(client->GetClientIndex()));
 	HANDLE hEvent = CreateEventA(NULL, TRUE, FALSE, name_s.c_str());
-	if (hEvent == NULL || hEvent == INVALID_HANDLE_VALUE) throw std::exception("An fatal error occurred during the creation of the Event");
+	if (hEvent == NULL || hEvent == INVALID_HANDLE_VALUE) throw std::exception("A fatal error occurred during the creation of the Event");
 
 	while (TRUE) {
 

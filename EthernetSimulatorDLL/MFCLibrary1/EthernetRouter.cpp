@@ -23,7 +23,6 @@ EthernetRouter::EthernetRouter(EthernetHub& hub, BYTE RouterMACAddr[6]) : Ethern
 	this->ClientSocket = INVALID_SOCKET;
 
 	this->ConnectToHub();
-	//TODO: this->StartHandling();
 	this->StartHandling(OnNewFrameReceivedCallback, this);
 }
 
@@ -45,8 +44,10 @@ static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 
 	router = (EthernetRouter*)routerPtr;
 
-	// Initialize Socket for external COMMs
+	HANDLE hEvent = CreateEventA(NULL, TRUE, FALSE, "Global\\EVT:SYNACKREC");
+	if (hEvent == NULL || hEvent == INVALID_HANDLE_VALUE) throw std::exception("A fatal error occurred during the creation of the Event");
 
+	// Initialize Socket for external COMMs
 	// Initializing WINSOCK api
 	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
 	{
@@ -70,11 +71,8 @@ static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 
 	// Putting the socket in 'LISTENING' state
 	listen(main_socket, SOMAXCONN);
+
 	int c = sizeof(client);
-
-	HANDLE hEvent = CreateEventA(NULL, TRUE, FALSE, "Global\\EVT:SYNACKREC");
-	if (hEvent == NULL || hEvent == INVALID_HANDLE_VALUE) throw std::exception("An fatal error occurred during the creation of the Event");
-
 	while (TRUE) {
 
 		SOCKET new_socket = accept(main_socket, (struct sockaddr*)&client, &c);
@@ -86,9 +84,10 @@ static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 
 		router->ClientSocket = new_socket;
 
-		// We have to open a connection towards the client, so SYN
 		router->TCPSeqNr = 0;
 		router->TCPAckNr = 1;
+
+		// We have to open a connection towards the client, so SYN
 		auto tcpFrameOut = router->PrepareTCPFrame(TCP_CODE_SYN);
 		router->SendData(&tcpFrameOut[0], tcpFrameOut.size());
 
@@ -114,7 +113,6 @@ static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 			if (iResult > 0) {
 				auto tcpFrame = router->PrepareTCPFrame(std::vector<BYTE>(recvbuf, recvbuf + iResult));
 				router->SendData(&tcpFrame[0], tcpFrame.size());
-				router->TCPSeqNr += iResult;
 			}
 			
 			/*std::stringstream ss;
@@ -128,7 +126,17 @@ static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 
 		} while (iResult > 0);
 
-		//shutdown(router->GetMainSocket(), SD_RECEIVE);
+		// We are here, means that the HOST connected to our socket
+		// disconnected, so we can send a FIN 
+
+		tcpFrameOut = router->PrepareTCPFrame(TCP_CODE_FIN | TCP_CODE_ACK);
+		router->SendData(&tcpFrameOut[0], tcpFrameOut.size());
+
+		// Now we wait for a FIN from the other side
+		WaitForSingleObject(hEvent, INFINITE);
+		ResetEvent(hEvent);
+
+
 		router->ClientSocket = INVALID_SOCKET;
 		closesocket(new_socket);
 	}
@@ -147,37 +155,69 @@ static void OnNewFrameReceivedCallback(BYTE* frame, DWORD frameSize, LPVOID args
 
 	router = (EthernetRouter*)args;
 
+	HANDLE hEvent = OpenEventA(EVENT_ALL_ACCESS, TRUE, "Global\\EVT:SYNACKREC");
+	if (hEvent == NULL || hEvent == INVALID_HANDLE_VALUE) return;
+
+	std::stringstream ss;
+	ss << std::hex;
+
+	for (int i(0); i < frameSize; ++i)
+		ss << std::setw(2) << std::setfill('0') << (int)frame[i];
+
+	auto x = ss.str();
+
 	switch (frame[TCP_DATA_CODE_OFS + 1]) {
 	
 	case (TCP_CODE_SYN | TCP_CODE_ACK): {
 
-		// We have to say to the router that we received a SYN ACK
-		HANDLE hEvent = OpenEventA(EVENT_ALL_ACCESS, TRUE, "Global\\EVT:SYNACKREC");
-		if (hEvent == NULL || hEvent == INVALID_HANDLE_VALUE) return;
+		router->TCPAckNr = (((((frame[TCP_SEQNR_OFS] << 8) | frame[TCP_SEQNR_OFS + 1]) << 8) | frame[TCP_SEQNR_OFS + 2]) << 8) | frame[TCP_SEQNR_OFS + 3];
+		router->TCPAckNr++;
 
+		// We have to say to the router that we received a SYN ACK
 		SetEvent(hEvent);
+
+		break;
+	}
+
+	case (TCP_CODE_FIN | TCP_CODE_ACK): {
+
+		// We received the FIN from the other side too
+		// SENDING FIN's ACK 
+		router->TCPSeqNr++;
+		router->TCPAckNr++;
+		auto tcpFrameOut = router->PrepareTCPFrame(TCP_CODE_ACK);
+		router->SendData(&tcpFrameOut[0], tcpFrameOut.size());
+
+		// Notifying the router that we are done
+		SetEvent(hEvent);
+
 		break;
 	}
 
 	default: {
 
 		// We received a normal TCP data packet, we have to forward it to the socket
-		std::stringstream ss;
-		ss << std::hex;
-
-		for (int i(0); i < frameSize; ++i)
-			ss << std::setw(2) << std::setfill('0') << (int)frame[i];
-
-		auto x = ss.str();
-
 		int datalength = frameSize - (TCP_CHKSUM_OFS + 4);
-		send(router->ClientSocket, (char *)TCP_TX_BUF(frame), datalength, 0);
-
-		router->TCPAckNr += datalength; // next ACK will ack this frame
 		
-		// SENDING ACK
-		auto tcpFrameOut = router->PrepareTCPFrame(TCP_CODE_ACK);
-		router->SendData(&tcpFrameOut[0], tcpFrameOut.size());
+		// But we forward it only if its length is > 0
+		// If it's == 0 means that it's not a data packet, maybe it's an ACK!
+		// And we don't want to forward empty data packet and ACK them, 
+		// else means that we are ACKing an ACK!
+		if (datalength) {
+
+			// Forwarding to the router
+			send(router->ClientSocket, (char*)TCP_TX_BUF(frame), datalength, 0);
+
+			// Next our SEQ will be the last packet correctly ACKed 
+			router->TCPSeqNr = (((((frame[TCP_ACKNR_OFS] << 8) | frame[TCP_ACKNR_OFS + 1]) << 8) | frame[TCP_ACKNR_OFS + 2]) << 8) | frame[TCP_ACKNR_OFS + 3];
+			
+			// next ACK will ACK the received frame of length 'datalength'
+			router->TCPAckNr += datalength; 
+
+			// SENDING ACK
+			auto tcpFrameOut = router->PrepareTCPFrame(TCP_CODE_ACK);
+			router->SendData(&tcpFrameOut[0], tcpFrameOut.size());
+		}
 
 		break;
 	}
@@ -230,16 +270,13 @@ std::vector<BYTE> EthernetRouter::PrepareTCPFrame(unsigned short TCPCode) {
 	*(unsigned short*)&TxFrame[TCP_CHKSUM_OFS] = 0;             // initalize checksum
 	*(unsigned short*)&TxFrame[TCP_URGENT_OFS] = 0;
 
-	if (TCPCode & TCP_CODE_SYN)                    // if SYN, we want to use the MSS option
-	{
+	if (TCPCode & TCP_CODE_SYN) {                 // if SYN, we want to use the MSS option
 		*(unsigned short*)&TxFrame[TCP_DATA_CODE_OFS] = SWAPB(0x6000 | TCPCode);   // TCP header length = 24
 		*(unsigned short*)&TxFrame[TCP_DATA_OFS] = SWAPB(TCP_OPT_MSS);             // MSS option
 		*(unsigned short*)&TxFrame[TCP_DATA_OFS + 2] = SWAPB(MAX_TCP_RX_DATA_SIZE);// max. length of TCP-data we accept
 		*(unsigned short*)&TxFrame[TCP_CHKSUM_OFS] = CalcChecksum(&TxFrame[TCP_SRCPORT_OFS], TCP_HEADER_SIZE + TCP_OPT_MSS_SIZE, 1, (WORD*)SrcIP, (WORD*)DestIP);
 		TxFrame2Size = ETH_HEADER_SIZE + IP_HEADER_SIZE + TCP_HEADER_SIZE + TCP_OPT_MSS_SIZE;
-	}
-	else
-	{
+	} else {
 		*(unsigned short*)&TxFrame[TCP_DATA_CODE_OFS] = SWAPB(0x5000 | TCPCode);   // TCP header length = 20
 		*(unsigned short*)&TxFrame[TCP_CHKSUM_OFS] = CalcChecksum(&TxFrame[TCP_SRCPORT_OFS], TCP_HEADER_SIZE, 1, (WORD*)SrcIP, (WORD*)DestIP);
 		TxFrame2Size = ETH_HEADER_SIZE + IP_HEADER_SIZE + TCP_HEADER_SIZE;
