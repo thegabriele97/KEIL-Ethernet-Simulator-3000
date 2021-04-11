@@ -113,7 +113,14 @@ public:
 	DWORD TCPSeqNr;
 	DWORD TCPAckNr;
 
+	// Temporary NAT table
+	WORD TCPRouterPort = 6589;
+	WORD TCPRemotePort = 6589;
+	std::vector<BYTE> IPRemoteAddr = { 192, 168, 1, 154 };
+
 	SOCKET ClientSocket;
+	struct sockaddr_in ClientInfo;
+	std::vector<BYTE> ClientMACAddr;
 
 	BYTE* GetMACAddress();
 	BYTE* GetIPAddress();
