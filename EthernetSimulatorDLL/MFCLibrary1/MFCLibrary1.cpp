@@ -46,6 +46,7 @@ extern "C" DWORD AGSIEXPORT AgsiEntry(DWORD nCode, void* vp) {
 
     case AGSI_TERMINATE: {
         delete Client;
+        delete Router;
     }
     break;
 

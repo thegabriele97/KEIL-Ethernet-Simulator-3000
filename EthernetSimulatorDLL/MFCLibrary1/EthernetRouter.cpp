@@ -27,6 +27,23 @@ EthernetRouter::EthernetRouter(EthernetHub& hub, BYTE RouterMACAddr[6], BYTE Rou
 	this->StartHandling(OnNewFrameReceivedCallback, this);
 }
 
+EthernetRouter::~EthernetRouter() {
+
+	// Closing all threads
+	TerminateThread(this->hThread, 0x0);
+
+	// Closing all sockets
+	if (this->ClientSocket != NULL) {
+		closesocket(this->ClientSocket);
+	}
+
+	closesocket(this->GetMainSocket());
+
+	// Cleaning up all the things
+	WSACleanup();
+
+}
+
 BYTE* EthernetRouter::GetMACAddress() {
 	return &this->MACAddr[0];
 }
@@ -35,19 +52,26 @@ BYTE* EthernetRouter::GetIPAddress() {
 	return &this->IPAddr[0];
 }
 
+SOCKET EthernetRouter::GetMainSocket() {
+	return this->main_socket;
+}
+
+SOCKET EthernetRouter::SetMainSocket(SOCKET s) {
+	this->main_socket = s;
+	return s;
+}
+
 void EthernetRouter::StartRouterHandling() {
 	DWORD mainThreadId;
-	HANDLE hThread;
 
-	hThread = CreateThread(NULL, 0, HandlerThread, this, 0, &mainThreadId);
-	if (hThread == NULL) throw std::exception("An error occurred while creating the handler thread");
+	this->hThread = CreateThread(NULL, 0, HandlerThread, this, 0, &mainThreadId);
+	if (this->hThread == NULL) throw std::exception("An error occurred while creating the handler thread");
 }
 
 static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 	EthernetRouter *router;
 	static char recvbuf[DEFAULT_BUFLEN];
 	struct sockaddr_in server_bind;
-	SOCKET main_socket;
 	WSADATA wsa;
 
 	router = (EthernetRouter*)routerPtr;
@@ -57,33 +81,30 @@ static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 
 	// Initialize Socket for external COMMs
 	// Initializing WINSOCK api
-	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
-	{
+	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0) {
 		// error
 	}
 
-	// Creating the socket and binding it to [::]:6589 actually
-	if ((main_socket = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
-	{
+	// Creating the socket and binding it to [::]:TCPRouterPort
+	if ((router->SetMainSocket(socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)) {
 		// error
 	}
 
 	server_bind.sin_family = AF_INET;
 	server_bind.sin_addr.s_addr = INADDR_ANY; // inet_addr("127.0.0.1");
-	server_bind.sin_port = htons(6589);
+	server_bind.sin_port = htons(router->TCPRouterPort);
 
-	if (bind(main_socket, (struct sockaddr*)&server_bind, sizeof(server_bind)) == SOCKET_ERROR)
-	{
+	if (bind(router->GetMainSocket(), (struct sockaddr*)&server_bind, sizeof(server_bind)) == SOCKET_ERROR) {
 		// error
 	}
 
 	// Putting the socket in 'LISTENING' state
-	listen(main_socket, SOMAXCONN);
+	listen(router->GetMainSocket(), SOMAXCONN);
 
 	int c = sizeof(router->ClientInfo);
 	while (TRUE) {
 
-		SOCKET new_socket = accept(main_socket, (struct sockaddr*)&router->ClientInfo, &c);
+		SOCKET new_socket = accept(router->GetMainSocket(), (struct sockaddr*)&router->ClientInfo, &c);
 		if (new_socket == INVALID_SOCKET)
 		{
 			closesocket(new_socket);

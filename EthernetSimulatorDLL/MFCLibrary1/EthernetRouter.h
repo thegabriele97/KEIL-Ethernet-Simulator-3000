@@ -99,16 +99,20 @@
 class EthernetRouter : public EthernetClient {
 
 private:
+
+	HANDLE hThread;
+	SOCKET main_socket;
+
 	std::vector<BYTE> MACAddr;
 	std::vector<BYTE> IPAddr;
 	WORD TCPState;
 
 public:
 	EthernetRouter(EthernetHub& hub, BYTE RouterMACAddr[6], BYTE RouterIPAddr[4]);
-	//EthernetRouter(EthernetHub& hub, std::string RouterMACAddr);
+	~EthernetRouter();
 	
-
-	//~EthernetRouter();
+	SOCKET GetMainSocket();
+	SOCKET SetMainSocket(SOCKET s);
 
 	DWORD TCPSeqNr;
 	DWORD TCPAckNr;
