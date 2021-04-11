@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "EthernetRouter.h"
+#include "EthernetFrameCommon.h"
 
 #include <sstream>
 #include <iomanip>
 #include <string>
 
 #define DEFAULT_BUFLEN		257
-#define FRAME_IP            0x0800
 
 #define SWAPB(Word)         ((WORD)((Word) << 8) | ((Word) >> 8))
 

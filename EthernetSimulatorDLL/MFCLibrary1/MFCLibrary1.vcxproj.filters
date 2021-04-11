@@ -70,6 +70,9 @@
     <ClInclude Include="EthernetRouter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EthernetFrameCommon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MFCLibrary1.rc">

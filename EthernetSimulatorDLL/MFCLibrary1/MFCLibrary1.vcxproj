@@ -215,6 +215,7 @@ echo F|xcopy /d /Y "$(TargetDir)$(ProjectName).dll" "D:\Softwares_OS\Keil_v5\ARM
     <ClInclude Include="AGSI.h" />
     <ClInclude Include="EthernetClient.h" />
     <ClInclude Include="EthernetCommon.h" />
+    <ClInclude Include="EthernetFrameCommon.h" />
     <ClInclude Include="EthernetHub.h" />
     <ClInclude Include="EthernetRouter.h" />
     <ClInclude Include="framework.h" />
