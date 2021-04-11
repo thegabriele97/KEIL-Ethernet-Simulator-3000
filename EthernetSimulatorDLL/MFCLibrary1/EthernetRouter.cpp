@@ -17,13 +17,22 @@ static void WriteWBE(BYTE* Add, WORD Data);
 void WriteDWBE(unsigned char* Add, unsigned long Data);
 unsigned short CalcChecksum(void* Start, WORD Count, BYTE IsTCP, WORD MyIP[2], WORD RemoteIP[2]);
 
-EthernetRouter::EthernetRouter(EthernetHub& hub, BYTE RouterMACAddr[6]) : EthernetClient(hub) {
+EthernetRouter::EthernetRouter(EthernetHub& hub, BYTE RouterMACAddr[6], BYTE RouterIPAddr[4]) : EthernetClient(hub) {
 	
-	this->MACAddr = std::vector<BYTE>(RouterMACAddr, RouterMACAddr + 6);
 	this->ClientSocket = INVALID_SOCKET;
+	this->MACAddr = std::vector<BYTE>(RouterMACAddr, RouterMACAddr + 6);
+	this->IPAddr = std::vector<BYTE>(RouterIPAddr, RouterIPAddr + 4);;
 
 	this->ConnectToHub();
 	this->StartHandling(OnNewFrameReceivedCallback, this);
+}
+
+BYTE* EthernetRouter::GetMACAddress() {
+	return &this->MACAddr[0];
+}
+
+BYTE* EthernetRouter::GetIPAddress() {
+	return &this->IPAddr[0];
 }
 
 void EthernetRouter::StartRouterHandling() {
@@ -149,11 +158,20 @@ static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 
 static void OnNewFrameReceivedCallback(BYTE* frame, DWORD frameSize, LPVOID args) {
 	EthernetRouter* router;
-
-	// TODO: here we should filter all incoming packet
-	// and leave only brodcast or towards our router's MAC addr
-
+	BYTE incomingDestMAC[6];
+	
 	router = (EthernetRouter*)args;
+
+	// First 6 bytes are DEST MAC ADDR
+	memcpy(incomingDestMAC, frame, 6);
+
+	if (memcmp(incomingDestMAC, new BYTE[6]{ 0xff, 0xff, 0xff, 0xff, 0xff, 0xff }, 6) == 0) {
+		// Do things if it's broadcast,
+		// maybe it's an ARP req so send an ARP reply!
+	} else if (memcmp(incomingDestMAC, router->GetMACAddress(), 6) != 0) {
+		// NOT for us: reject it
+		return;
+	}
 
 	HANDLE hEvent = OpenEventA(EVENT_ALL_ACCESS, TRUE, "Global\\EVT:SYNACKREC");
 	if (hEvent == NULL || hEvent == INVALID_HANDLE_VALUE) return;
@@ -226,21 +244,46 @@ static void OnNewFrameReceivedCallback(BYTE* frame, DWORD frameSize, LPVOID args
 
 }
 
+std::vector<BYTE> EthernetRouter::PrepareARPRequest(std::vector<BYTE> RemoteIP) {
+	static BYTE TxFrame[ETH_HEADER_SIZE + ARP_FRAME_SIZE];
+
+	// Ethernet
+	memset(&TxFrame[ETH_DA_OFS], (BYTE)0xFF, 6);                  // we don't know opposites MAC!
+	memcpy(&TxFrame[ETH_SA_OFS], this->GetMACAddress(), 6);
+	*(WORD*)&TxFrame[ETH_TYPE_OFS] = SWAPB(FRAME_ARP);
+
+	// ARP
+	*(WORD*)&TxFrame[ARP_HARDW_OFS] = SWAPB(HARDW_ETH10);
+	*(WORD*)&TxFrame[ARP_PROT_OFS] = SWAPB(FRAME_IP);
+	*(WORD*)&TxFrame[ARP_HLEN_PLEN_OFS] = SWAPB(IP_HLEN_PLEN);
+	*(WORD*)&TxFrame[ARP_OPCODE_OFS] = SWAPB(OP_ARP_REQUEST);
+	memcpy(&TxFrame[ARP_SENDER_HA_OFS], this->GetMACAddress(), 6);
+	memcpy(&TxFrame[ARP_SENDER_IP_OFS], this->GetIPAddress(), 4);
+	memset(&TxFrame[ARP_TARGET_HA_OFS], 0x00, 6);           // we don't know opposites MAC!
+
+	memcpy(&TxFrame[ARP_TARGET_IP_OFS], &RemoteIP[0], 4);
+
+	/*if (((RemoteIP[0] ^ MyIP[0]) & SubnetMask[0]) || ((RemoteIP[1] ^ MyIP[1]) & SubnetMask[1]))
+		memcpy(&TxFrame2[ARP_TARGET_IP_OFS], &GatewayIP, 4);   // IP not in subnet, use gateway
+	else
+		memcpy(&TxFrame2[ARP_TARGET_IP_OFS], &RemoteIP, 4);    // other IP is next to us...*/
+
+	return std::vector<BYTE>(TxFrame, TxFrame + ETH_HEADER_SIZE + ARP_FRAME_SIZE);
+}
+
 std::vector<BYTE> EthernetRouter::PrepareTCPFrame(unsigned short TCPCode) {
 	static BYTE TxFrame[TCP_FRAME_SIZE];
 	WORD TxFrame2Size;
 
 	auto DestMAC = new BYTE[6]{ 0x1e, 0x30, 0x6c, 0xa2, 0x45, 0x5e };
 	auto DestIP = new BYTE[4]{ 192, 168, 1, 154 };
-	auto SrcMAC = new BYTE[6]{ 0x1f, 0x3f, 0x6f, 0xaf, 0x4f, 0x5a };
-	auto SrcIP = new BYTE[4]{ 192, 168, 1, 254 };
 
 	WORD TCPLocalPort = 6589;
 	WORD TCPRemotePort = 6589;
 
 	// Ethernet
 	memcpy(&TxFrame[ETH_DA_OFS], DestMAC, 6);
-	memcpy(&TxFrame[ETH_SA_OFS], SrcMAC, 6);
+	memcpy(&TxFrame[ETH_SA_OFS], this->GetMACAddress(), 6);
 	*(unsigned short*)&TxFrame[ETH_TYPE_OFS] = SWAPB(FRAME_IP);
 
 	// IP   
@@ -255,9 +298,9 @@ std::vector<BYTE> EthernetRouter::PrepareTCPFrame(unsigned short TCPCode) {
 	*(unsigned short*)&TxFrame[IP_FLAGS_FRAG_OFS] = 0;
 	*(unsigned short*)&TxFrame[IP_TTL_PROT_OFS] = SWAPB((DEFAULT_TTL << 8) | PROT_TCP);
 	*(unsigned short*)&TxFrame[IP_HEAD_CHKSUM_OFS] = 0;
-	memcpy(&TxFrame[IP_SOURCE_OFS], SrcIP, 4);
+	memcpy(&TxFrame[IP_SOURCE_OFS], this->GetIPAddress(), 4);
 	memcpy(&TxFrame[IP_DESTINATION_OFS], DestIP, 4);
-	*(unsigned short*)&TxFrame[IP_HEAD_CHKSUM_OFS] = CalcChecksum(&TxFrame[IP_VER_IHL_TOS_OFS], IP_HEADER_SIZE, 0, (WORD*)SrcIP, (WORD*)DestIP);
+	*(unsigned short*)&TxFrame[IP_HEAD_CHKSUM_OFS] = CalcChecksum(&TxFrame[IP_VER_IHL_TOS_OFS], IP_HEADER_SIZE, 0, (WORD*)this->GetIPAddress(), (WORD*)DestIP);
 
 	// TCP
 	WriteWBE(&TxFrame[TCP_SRCPORT_OFS], TCPLocalPort);
@@ -274,11 +317,11 @@ std::vector<BYTE> EthernetRouter::PrepareTCPFrame(unsigned short TCPCode) {
 		*(unsigned short*)&TxFrame[TCP_DATA_CODE_OFS] = SWAPB(0x6000 | TCPCode);   // TCP header length = 24
 		*(unsigned short*)&TxFrame[TCP_DATA_OFS] = SWAPB(TCP_OPT_MSS);             // MSS option
 		*(unsigned short*)&TxFrame[TCP_DATA_OFS + 2] = SWAPB(MAX_TCP_RX_DATA_SIZE);// max. length of TCP-data we accept
-		*(unsigned short*)&TxFrame[TCP_CHKSUM_OFS] = CalcChecksum(&TxFrame[TCP_SRCPORT_OFS], TCP_HEADER_SIZE + TCP_OPT_MSS_SIZE, 1, (WORD*)SrcIP, (WORD*)DestIP);
+		*(unsigned short*)&TxFrame[TCP_CHKSUM_OFS] = CalcChecksum(&TxFrame[TCP_SRCPORT_OFS], TCP_HEADER_SIZE + TCP_OPT_MSS_SIZE, 1, (WORD*)this->GetIPAddress(), (WORD*)DestIP);
 		TxFrame2Size = ETH_HEADER_SIZE + IP_HEADER_SIZE + TCP_HEADER_SIZE + TCP_OPT_MSS_SIZE;
 	} else {
 		*(unsigned short*)&TxFrame[TCP_DATA_CODE_OFS] = SWAPB(0x5000 | TCPCode);   // TCP header length = 20
-		*(unsigned short*)&TxFrame[TCP_CHKSUM_OFS] = CalcChecksum(&TxFrame[TCP_SRCPORT_OFS], TCP_HEADER_SIZE, 1, (WORD*)SrcIP, (WORD*)DestIP);
+		*(unsigned short*)&TxFrame[TCP_CHKSUM_OFS] = CalcChecksum(&TxFrame[TCP_SRCPORT_OFS], TCP_HEADER_SIZE, 1, (WORD*)this->GetIPAddress(), (WORD*)DestIP);
 		TxFrame2Size = ETH_HEADER_SIZE + IP_HEADER_SIZE + TCP_HEADER_SIZE;
 	}
 
@@ -290,14 +333,12 @@ std::vector<BYTE> EthernetRouter::PrepareTCPFrame(std::vector<BYTE> data) {
 
 	auto DestMAC = new BYTE[6]{ 0x1e, 0x30, 0x6c, 0xa2, 0x45, 0x5e };
 	auto DestIP = new BYTE[4]{ 192, 168, 1, 154 };
-	auto SrcMAC = new BYTE[6]{ 0x1f, 0x3f, 0x6f, 0xaf, 0x4f, 0x5a };
-	auto SrcIP = new BYTE[4]{ 192, 168, 1, 254 };
 
 	WORD TCPLocalPort = 6589;
 	WORD TCPRemotePort = 6589;
 
 	memcpy(&TxFrame[ETH_DA_OFS], DestMAC, 6);
-	memcpy(&TxFrame[ETH_SA_OFS], SrcMAC, 6);
+	memcpy(&TxFrame[ETH_SA_OFS], this->GetMACAddress(), 6);
 	*(WORD *)&TxFrame[ETH_TYPE_OFS] = SWAPB(FRAME_IP);
 
 	// IP   
@@ -307,9 +348,9 @@ std::vector<BYTE> EthernetRouter::PrepareTCPFrame(std::vector<BYTE> data) {
 	*(WORD *)&TxFrame[IP_FLAGS_FRAG_OFS] = 0;
 	*(WORD *)&TxFrame[IP_TTL_PROT_OFS] = SWAPB((DEFAULT_TTL << 8) | PROT_TCP);
 	*(WORD *)&TxFrame[IP_HEAD_CHKSUM_OFS] = 0;
-	memcpy(&TxFrame[IP_SOURCE_OFS], SrcIP, 4);
+	memcpy(&TxFrame[IP_SOURCE_OFS], this->GetIPAddress(), 4);
 	memcpy(&TxFrame[IP_DESTINATION_OFS], DestIP, 4);
-	*(unsigned short*)&TxFrame[IP_HEAD_CHKSUM_OFS] = CalcChecksum(&TxFrame[IP_VER_IHL_TOS_OFS], IP_HEADER_SIZE, 0, (WORD *)SrcIP, (WORD *)DestIP);
+	*(unsigned short*)&TxFrame[IP_HEAD_CHKSUM_OFS] = CalcChecksum(&TxFrame[IP_VER_IHL_TOS_OFS], IP_HEADER_SIZE, 0, (WORD *)this->GetIPAddress(), (WORD *)DestIP);
 
 	// TCP
 	WriteWBE(&TxFrame[TCP_SRCPORT_OFS], TCPLocalPort);
@@ -321,7 +362,7 @@ std::vector<BYTE> EthernetRouter::PrepareTCPFrame(std::vector<BYTE> data) {
 	*(unsigned short*)&TxFrame[TCP_WINDOW_OFS] = SWAPB(MAX_TCP_RX_DATA_SIZE);       // data bytes to accept
 	*(unsigned short*)&TxFrame[TCP_CHKSUM_OFS] = 0;
 	*(unsigned short*)&TxFrame[TCP_URGENT_OFS] = 0;
-	*(WORD *)&TxFrame[TCP_CHKSUM_OFS] = CalcChecksum(&TxFrame[TCP_SRCPORT_OFS], TCP_HEADER_SIZE + data.size(), 1, (WORD*)SrcIP, (WORD*)DestIP);
+	*(WORD *)&TxFrame[TCP_CHKSUM_OFS] = CalcChecksum(&TxFrame[TCP_SRCPORT_OFS], TCP_HEADER_SIZE + data.size(), 1, (WORD*)this->GetIPAddress(), (WORD*)DestIP);
 
 	memcpy(TCP_TX_BUF(TxFrame), &data[0], data.size());
 	return std::vector<BYTE>(TxFrame, TxFrame + ETH_HEADER_SIZE + IP_HEADER_SIZE + TCP_HEADER_SIZE + data.size());

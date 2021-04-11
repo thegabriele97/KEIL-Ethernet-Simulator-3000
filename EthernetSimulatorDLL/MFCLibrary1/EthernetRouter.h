@@ -100,10 +100,11 @@ class EthernetRouter : public EthernetClient {
 
 private:
 	std::vector<BYTE> MACAddr;
+	std::vector<BYTE> IPAddr;
 	WORD TCPState;
 
 public:
-	EthernetRouter(EthernetHub& hub, BYTE RouterMACAddr[6]);
+	EthernetRouter(EthernetHub& hub, BYTE RouterMACAddr[6], BYTE RouterIPAddr[4]);
 	//EthernetRouter(EthernetHub& hub, std::string RouterMACAddr);
 	
 
@@ -114,7 +115,11 @@ public:
 
 	SOCKET ClientSocket;
 
+	BYTE* GetMACAddress();
+	BYTE* GetIPAddress();
+
 	void StartRouterHandling();
+	std::vector<BYTE> PrepareARPRequest(std::vector<BYTE> RemoteIP);
 	std::vector<BYTE> PrepareTCPFrame(unsigned short TCPCode);
 	std::vector<BYTE> PrepareTCPFrame(std::vector<BYTE> data);
 
