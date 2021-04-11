@@ -76,23 +76,36 @@ BOOL InitAction(AGSICONFIG *cfg) {
     retVal &= Agsi.SetWatchOnMemory(LPC_EMAC_RxDescriptor, LPC_EMAC_RxDescriptor, OnEMACRxDescriptorWRAccessHandler, AGSIWRITE);
     retVal &= Agsi.SetWatchOnMemory(LPC_EMAC_TxProduceIndex, LPC_EMAC_TxProduceIndex, OnEMACTxProduceIndexChangeHandler, AGSIWRITE);
 
+    Agsi.Message("Ethernet Emulator: Initializing the Ethernet HUB.. ");
     if (!Hub.CreationSucceded()) {
         retVal &= ~Hub.FailedBcsAlreadyExists();
+        if (retVal) Agsi.Message("Oops, the HUB already exists!\n");
         if (!retVal) return FALSE;
     } else if (Hub.CreationSucceded()) {
         Hub.StartHandling();
+        Agsi.Message("\tOK!\n");
     }
 
     // This clients and other ones can connect now..
     // Do it here for this session!
+    Agsi.Message("Ethernet Emulator: Initializing the Ethernet client.. ");
     Client = new EthernetClient(Hub);
-    if (Client->FailedBcsNotValidHubPipe()) return FALSE;
+    if (Client->FailedBcsNotValidHubPipe()) {
+        Agsi.Message("something bad happened and the Eth Emulator won't start! I suggest you to restart everything!\n");
+        return FALSE;
+    } else {
+        Agsi.Message("\tOK!\n");
+    }
 
     retVal &= Client->ConnectToHub();
     if (retVal) Client->StartHandling(OnNewFrameAvailableCallback);
 
+    Agsi.Message("Ethernet Emulator: Initializing the Router.. ");
     Router = new EthernetRouter(Hub, new BYTE[6]{ 0x1f, 0x3f, 0x6f, 0xaf, 0x4f, 0x5f }, new BYTE[]{ 192, 168, 2, 254 });
     Router->StartRouterHandling();
+    Agsi.Message("\tOK!\n");
+
+    if (retVal) Agsi.Message("Ethernet Emulator: Ok everything seems initialized correctly, enjoy!\n");
 
     return retVal;
 }
