@@ -90,7 +90,7 @@ BOOL InitAction(AGSICONFIG *cfg) {
     retVal &= Client->ConnectToHub();
     if (retVal) Client->StartHandling(OnNewFrameAvailableCallback);
 
-    Router = new EthernetRouter(Hub, new BYTE[6]{ 0x1f, 0x3f, 0x6f, 0xaf, 0x4f, 0x5a }, new BYTE[]{ 192, 168, 1, 254 });
+    Router = new EthernetRouter(Hub, new BYTE[6]{ 0x1f, 0x3f, 0x6f, 0xaf, 0x4f, 0x5f }, new BYTE[]{ 192, 168, 2, 254 });
     Router->StartRouterHandling();
 
     return retVal;

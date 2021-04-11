@@ -116,7 +116,7 @@ public:
 	// Temporary NAT table
 	WORD TCPRouterPort = 6589;
 	WORD TCPRemotePort = 6589;
-	std::vector<BYTE> IPRemoteAddr = { 192, 168, 1, 154 };
+	std::vector<BYTE> IPRemoteAddr = { 192, 168, 2, 154 };
 
 	SOCKET ClientSocket;
 	struct sockaddr_in ClientInfo;
