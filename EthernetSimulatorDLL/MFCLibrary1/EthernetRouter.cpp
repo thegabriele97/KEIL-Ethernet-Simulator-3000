@@ -6,6 +6,12 @@
 #include <iomanip>
 #include <string>
 
+#ifdef _DEBUG
+#include <iostream>
+#include <io.h>
+#include <fcntl.h>
+#endif
+
 #define DEFAULT_BUFLEN		257
 
 #define SWAPB(Word)         ((WORD)((Word) << 8) | ((Word) >> 8))
@@ -18,6 +24,34 @@ void WriteDWBE(unsigned char* Add, unsigned long Data);
 unsigned short CalcChecksum(void* Start, WORD Count, BYTE IsTCP, WORD MyIP[2], WORD RemoteIP[2]);
 
 EthernetRouter::EthernetRouter(EthernetHub& hub, BYTE RouterMACAddr[6], BYTE RouterIPAddr[4]) : EthernetClient(hub) {
+
+#ifdef _DEBUG
+	AllocConsole();
+
+	// std::cout, std::clog, std::cerr, std::cin
+	FILE* fDummy;
+	freopen_s(&fDummy, "CONOUT$", "w", stdout);
+	freopen_s(&fDummy, "CONOUT$", "w", stderr);
+	freopen_s(&fDummy, "CONIN$", "r", stdin);
+	std::cout.clear();
+	std::clog.clear();
+	std::cerr.clear();
+	std::cin.clear();
+
+	// std::wcout, std::wclog, std::wcerr, std::wcin
+	HANDLE hConOut = CreateFile(_T("CONOUT$"), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	HANDLE hConIn = CreateFile(_T("CONIN$"), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	SetStdHandle(STD_OUTPUT_HANDLE, hConOut);
+	SetStdHandle(STD_ERROR_HANDLE, hConOut);
+	SetStdHandle(STD_INPUT_HANDLE, hConIn);
+	std::wcout.clear();
+	std::wclog.clear();
+	std::wcerr.clear();
+	std::wcin.clear();
+
+	//fprintf(hf_out, "########\tEthernetRouter - DEBUG CONSOLE -\t########\n");
+	std::cout << "########\t- EthernetRouter - DEBUG CONSOLE -\t########" << std::endl;
+#endif
 	
 	this->ClientSocket = INVALID_SOCKET;
 	this->MACAddr = std::vector<BYTE>(RouterMACAddr, RouterMACAddr + 6);
@@ -25,6 +59,11 @@ EthernetRouter::EthernetRouter(EthernetHub& hub, BYTE RouterMACAddr[6], BYTE Rou
 
 	this->ConnectToHub();
 	this->StartHandling(OnNewFrameReceivedCallback, this);
+
+#ifdef _DEBUG
+	std::cout << " - Router initialized" << std::endl;
+#endif
+
 }
 
 EthernetRouter::~EthernetRouter() {
@@ -76,6 +115,10 @@ static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 
 	router = (EthernetRouter*)routerPtr;
 
+#ifdef _DEBUG
+	std::cout << " - Initializing socket... ";
+#endif
+
 	HANDLE hEvent = CreateEventA(NULL, TRUE, FALSE, "Global\\EVT:SYNACKREC");
 	if (hEvent == NULL || hEvent == INVALID_HANDLE_VALUE) throw std::exception("A fatal error occurred during the creation of the Event");
 
@@ -101,6 +144,10 @@ static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 	// Putting the socket in 'LISTENING' state
 	listen(router->GetMainSocket(), SOMAXCONN);
 
+#ifdef _DEBUG
+	std::cout << "Bind done, set in LISTEN state" << std::endl;
+#endif
+
 	int c = sizeof(router->ClientInfo);
 	while (TRUE) {
 
@@ -113,6 +160,12 @@ static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 
 		router->ClientSocket = new_socket;
 
+#ifdef _DEBUG
+		std::cout << " - Client connected! IP address: " << router->ClientInfo.sin_addr.S_un.S_addr << std::endl;
+		std::cout << " - Send [TO ETHCLIENT]: ARP Request" << std::endl;
+#endif
+
+
 		// ARP Request: we want to know the Client Mac Address
 		auto frameOut = router->PrepareARPRequest(router->IPRemoteAddr);
 		router->SendData(&frameOut[0], frameOut.size());
@@ -121,8 +174,16 @@ static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 		WaitForSingleObject(hEvent, INFINITE);
 		ResetEvent(hEvent);
 
+#ifdef _DEBUG
+		std::cout << " - Received [FROM ETHCLIENT]: ARP Reply" << std::endl;
+#endif
+
 		router->TCPSeqNr = 0;
 		router->TCPAckNr = 1;
+
+#ifdef _DEBUG
+		std::cout << " - Send [TO ETHCLIENT]: SYN" << std::endl;
+#endif
 
 		// We have to open a connection towards the client, so SYN
 		auto tcpFrameOut = router->PrepareTCPFrame(TCP_CODE_SYN);
@@ -132,9 +193,14 @@ static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 		WaitForSingleObject(hEvent, INFINITE);
 		ResetEvent(hEvent);
 
+
 		// Inc the SEQ number
 		router->TCPSeqNr++;
 
+#ifdef _DEBUG
+		std::cout << " - Received [FROM ETHCLIENT]: SYN ACK" << std::endl;
+		std::cout << " - Send [TO ETHCLIENT]: ACK" << std::endl;
+#endif
 		// SYN ACK recevied. Sending ACK
 		tcpFrameOut = router->PrepareTCPFrame(TCP_CODE_ACK);
 		router->SendData(&tcpFrameOut[0], tcpFrameOut.size());
@@ -147,10 +213,20 @@ static DWORD WINAPI HandlerThread(LPVOID routerPtr) {
 			iResult = recv(new_socket, recvbuf, DEFAULT_BUFLEN, 0);
 			recvbuf[iResult] = '\0';
 
+#ifdef _DEBUG
+			std::cout << " - Received [FROM TCP_SOCKET]: RAW, LENGTH: " << iResult << std::endl;
+#endif
+
 			if (iResult > 0) {
 				auto tcpFrame = router->PrepareTCPFrame(std::vector<BYTE>(recvbuf, recvbuf + iResult));
+
+#ifdef _DEBUG
+				std::cout << " - Send [TO ETHCLIENT]: ETHFRAME, LENGTH: " << tcpFrame.size() << std::endl;
+#endif
+
 				router->SendData(&tcpFrame[0], tcpFrame.size());
 			}
+
 			
 			/*std::stringstream ss;
 			ss << std::hex;
@@ -250,6 +326,10 @@ static void OnNewFrameReceivedCallback(BYTE* frame, DWORD frameSize, LPVOID args
 
 	default: {
 
+#ifdef _DEBUG
+		std::cout << " - Received [FROM ETHCLIENT]: ETHFRAME, LENGTH: " << frameSize << std::endl;
+#endif
+
 		// We received a normal TCP data packet, we have to forward it to the socket
 		int datalength = frameSize - (TCP_CHKSUM_OFS + 4);
 		
@@ -258,6 +338,10 @@ static void OnNewFrameReceivedCallback(BYTE* frame, DWORD frameSize, LPVOID args
 		// And we don't want to forward empty data packet and ACK them, 
 		// else means that we are ACKing an ACK!
 		if (datalength) {
+
+#ifdef _DEBUG
+			std::cout << " - Send [TO TCP_SOCKET]: RAW, LENGTH: " << datalength << std::endl;
+#endif
 
 			// Forwarding to the router
 			send(router->ClientSocket, (char*)TCP_TX_BUF(frame), datalength, 0);
@@ -268,8 +352,14 @@ static void OnNewFrameReceivedCallback(BYTE* frame, DWORD frameSize, LPVOID args
 			// next ACK will ACK the received frame of length 'datalength'
 			router->TCPAckNr += datalength; 
 
+
 			// SENDING ACK
 			auto tcpFrameOut = router->PrepareTCPFrame(TCP_CODE_ACK);
+
+#ifdef _DEBUG
+			std::cout << " - Send [TO ETHCLIENT]: ETHFAME[ACK], LENGTH: " << tcpFrameOut.size() << std::endl;
+#endif
+
 			router->SendData(&tcpFrameOut[0], tcpFrameOut.size());
 		}
 
